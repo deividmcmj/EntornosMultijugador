@@ -13,6 +13,8 @@ public class PlayerInfo : MonoBehaviour
 
     public int CurrentLap { get; set; }
 
+    public Vector3 CurrentCircuitPosition, LookAtPoint;
+
     public override string ToString()
     {
         return Name;

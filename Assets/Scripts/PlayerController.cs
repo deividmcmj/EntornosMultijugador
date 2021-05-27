@@ -27,6 +27,23 @@ public class PlayerController : NetworkBehaviour
     private float InputSteering { get; set; }
     private float InputBrake { get; set; }
 
+    //Devuelve true si el coche está boca abajo y false si no.
+    private bool UpsideDown
+    {
+        get
+        {
+            return Mathf.Abs(transform.rotation.eulerAngles.z) >= 50f && Mathf.Abs(transform.rotation.eulerAngles.z) <= 310f;
+        }
+    }
+    //Devuelve true si el coche está parado y false si no.
+    private bool Stopped
+    {
+        get
+        {
+            return m_Rigidbody.velocity.magnitude <= 0.01f;
+        }
+    }
+
     private PlayerInfo m_PlayerInfo;
 
     private Rigidbody m_Rigidbody;
@@ -118,6 +135,15 @@ public class PlayerController : NetworkBehaviour
                 }
             }
 
+            //Si el jugador está boca abajo y parado, se vuelve a colocar en la pista
+            if (UpsideDown && Stopped)
+            {
+                DisablePhysics();
+                transform.position = new Vector3(m_PlayerInfo.CurrentCircuitPosition.x, 0.51f, m_PlayerInfo.CurrentCircuitPosition.z);
+                transform.rotation = Quaternion.LookRotation((m_PlayerInfo.LookAtPoint - m_PlayerInfo.CurrentCircuitPosition), Vector3.up);
+                EnablePhysics();
+            }
+
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
         }
@@ -131,6 +157,19 @@ public class PlayerController : NetworkBehaviour
     #endregion
 
     #region Methods
+
+    //Desactiva las físicas del jugador
+    public void DisablePhysics()
+    {
+        m_Rigidbody.isKinematic = true;
+        m_Rigidbody.detectCollisions = false;
+    }
+    //Activa las físicas del jugador
+    public void EnablePhysics()
+    {
+        m_Rigidbody.isKinematic = false;
+        m_Rigidbody.detectCollisions = true;
+    }
 
     // crude traction control that reduces the power to wheel if the car is wheel spinning too much
     private void TractionControl()
