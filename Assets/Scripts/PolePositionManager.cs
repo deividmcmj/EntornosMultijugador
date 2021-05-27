@@ -88,9 +88,11 @@ public class PolePositionManager : NetworkBehaviour
         int segIdx;
         float carDist;
         Vector3 carProj;
+        //Dirección del jugador
+        Vector3 carDir;
 
         float minArcL =
-            this._circuitController.ComputeClosestPointArcLength(carPos, out segIdx, out carProj, out carDist);
+            this._circuitController.ComputeClosestPointArcLength(carPos, out segIdx, out carProj, out carDir, out carDist);
 
         this._debuggingSpheres[id].transform.position = carProj;
 
@@ -103,6 +105,10 @@ public class PolePositionManager : NetworkBehaviour
             minArcL += _circuitController.CircuitLength *
                        (_players[id].CurrentLap - 1);
         }
+
+        //Actualizamos la posición y la rotación del jugador
+        this._players[id].CurrentCircuitPosition = carProj;
+        this._players[id].LookAtPoint = carDir;
 
         return minArcL;
     }
