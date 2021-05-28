@@ -84,4 +84,12 @@ public class SetupPlayer : NetworkBehaviour
     {
         if (Camera.main != null) Camera.main.gameObject.GetComponent<CameraController>().m_Focus = this.gameObject;
     }
+
+    public void UpdateDirectionMessage(string message)
+    {
+        if (isLocalPlayer)
+        {
+            _uiManager.UpdateUIDirectionMessage(message);
+        }
+    }
 }

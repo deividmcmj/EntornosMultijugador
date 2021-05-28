@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text textSpeed;
     [SerializeField] private Text textLaps;
     [SerializeField] private Text textPosition;
+    [SerializeField] private Text textWrongDirection;
 
     private void Awake()
     {
@@ -71,5 +72,11 @@ public class UIManager : MonoBehaviour
     {
         m_NetworkManager.StartServer();
         ActivateInGameHUD();
+    }
+
+    //Función que actualiza el texto para indicar la dirección de vuelta errónea
+    public void UpdateUIDirectionMessage(string text)
+    {
+        textWrongDirection.text = text;
     }
 }

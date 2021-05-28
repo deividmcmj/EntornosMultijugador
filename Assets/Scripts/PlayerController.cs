@@ -47,8 +47,10 @@ public class PlayerController : NetworkBehaviour
     private PlayerInfo m_PlayerInfo;
 
     private Rigidbody m_Rigidbody;
+    private SetupPlayer m_SetupPlayer;
     private float m_SteerHelper = 0.8f;
-
+    //Tiempo que se está yendo en sentido contrario
+    private float m_WrongDirectionTimer = 0.0f;
 
     private float m_CurrentSpeed = 0;
 
@@ -76,6 +78,7 @@ public class PlayerController : NetworkBehaviour
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         m_PlayerInfo = GetComponent<PlayerInfo>();
+        m_SetupPlayer = GetComponent<SetupPlayer>();
     }
 
     public void Update()
@@ -144,6 +147,21 @@ public class PlayerController : NetworkBehaviour
                 EnablePhysics();
             }
 
+            //Si el jugador está yendo en sentido contrario, se muestra un mensaje hasta que vuelva a seguir correctamente
+            if (!Stopped && m_PlayerInfo.Direction < 0)
+            {
+                m_WrongDirectionTimer += Time.deltaTime;
+                if (m_WrongDirectionTimer >= 2.0f)
+                {
+                    m_SetupPlayer.UpdateDirectionMessage("Dirección incorrecta");
+                }
+            }
+            else if (!Stopped && m_PlayerInfo.Direction > 0 && m_WrongDirectionTimer > 0.0f)
+            {
+                m_WrongDirectionTimer = 0.0f;
+                m_SetupPlayer.UpdateDirectionMessage("");
+            }
+
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
         }
@@ -152,6 +170,8 @@ public class PlayerController : NetworkBehaviour
         SpeedLimiter();
         AddDownForce();
         TractionControl();
+
+        m_PlayerInfo.Speed = m_Rigidbody.velocity;
     }
 
     #endregion

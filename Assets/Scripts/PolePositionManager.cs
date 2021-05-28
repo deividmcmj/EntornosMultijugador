@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Mirror;
+using Mirror.Cloud.Examples.Pong;
 using UnityEngine;
 
 public class PolePositionManager : NetworkBehaviour
@@ -106,9 +107,10 @@ public class PolePositionManager : NetworkBehaviour
                        (_players[id].CurrentLap - 1);
         }
 
-        //Actualizamos la posición y la rotación del jugador
+        //Actualizamos la posición, la rotación y la dirección del jugador
         this._players[id].CurrentCircuitPosition = carProj;
         this._players[id].LookAtPoint = carDir;
+        this._players[id].Direction = Vector3.Dot((carDir - carProj).normalized, this._players[id].Speed.normalized);
 
         return minArcL;
     }
