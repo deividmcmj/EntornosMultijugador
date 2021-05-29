@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button buttonClient;
     [SerializeField] private Button buttonServer;
     [SerializeField] private InputField inputFieldIP;
+    [SerializeField] private InputField inputFieldName;
+
 
     [Header("In-Game HUD")] [SerializeField]
     private GameObject inGameHUD;

@@ -66,9 +66,11 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-    public delegate void OnSpeedChangeDelegate(float newVal);
+    public event Action<float> OnSpeedChangeEvent;
 
-    public event OnSpeedChangeDelegate OnSpeedChangeEvent;
+    //public delegate void OnSpeedChangeDelegate(float newVal);
+
+    //public event OnSpeedChangeDelegate OnSpeedChangeEvent;
 
     #endregion Variables
 

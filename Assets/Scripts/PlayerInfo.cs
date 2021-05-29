@@ -3,9 +3,39 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
-public class PlayerInfo : MonoBehaviour
+public class PlayerInfo : NetworkBehaviour
 {
+    //Nombre del jugador, con su getter y setter
+    [SyncVar] [SerializeField] private string displayName;
+
+    [Server]
+    public void SetDisplayName(string newName)
+    {
+        displayName = newName;
+    }
+
+    public string GetDisplayName()
+    {
+        return displayName;
+    }
+
     public string Name { get; set; }
+
+    //Color del jugador, con su getter y setter
+
+    [SyncVar] [SerializeField] private Color displayColor;
+
+    [Server]
+    public void SetDisplayColor(Color newColor)
+    {
+        displayColor = newColor;
+    }
+
+    public Color GetDisplayColor()
+    {
+        return displayColor;
+    }
+
 
     public int ID { get; set; }
 
