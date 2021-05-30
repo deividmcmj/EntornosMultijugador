@@ -46,8 +46,11 @@ public class PlayerInfo : NetworkBehaviour
     //La posición del jugador en el circuito, la dirección que debe mirar para seguir adelante y su velocidad
     public Vector3 CurrentCircuitPosition, LookAtPoint, Speed;
 
-    //La dirección que sigue el jugador. Si sigue bien, valdrá 1; si no, valdrá -1
+    //La dirección que sigue el jugador. Si sigue bien, tendrá valor positivo; si no, tendrá valor negativo
     public float Direction;
+
+    //La distancia total que ha recorrido un jugador.
+    public float TotalDistance = 0;
 
     public override string ToString()
     {
