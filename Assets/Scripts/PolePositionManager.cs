@@ -135,6 +135,7 @@ public class PolePositionManager : NetworkBehaviour
         //this._debuggingSpheres[id].transform.position = carProj;
         _DebbuggingSpheres[id].transform.position = carProj;
 
+        /*
         if (_Players[id].CurrentLap == 0)
         {
             minArcL -= _circuitController.CircuitLength;
@@ -144,11 +145,23 @@ public class PolePositionManager : NetworkBehaviour
             minArcL += _circuitController.CircuitLength *
                        (_Players[id].CurrentLap - 1);
         }
+        */
+        Debug.LogFormat("Current: {0}, New: {1}", _Players[id].CurrentSegmentIdx, segIdx);
+        if (segIdx == 0 && _Players[id].CurrentSegmentIdx == _circuitController.TotalSegments - 1)
+        {
+            _Players[id].CrossLineForward();
+        }
+        else if (segIdx == _circuitController.TotalSegments - 1 && _Players[id].CurrentSegmentIdx == 0)
+        {
+            _Players[id].CrossLineBackwards();
+        }
 
         //Actualizamos la posición, la rotación y la dirección del jugador
         _Players[id].CurrentCircuitPosition = carProj;
         _Players[id].LookAtPoint = carDir;
-        _Players[id].Direction = Vector3.Dot((carDir - carProj).normalized, this._Players[id].Speed.normalized);
+        _Players[id].Direction = Vector3.Dot((carDir - carProj).normalized, _Players[id].Speed.normalized);
+        _Players[id].ArcInfo = minArcL;
+        _Players[id].CurrentSegmentIdx = segIdx;
 
         return minArcL;
     }

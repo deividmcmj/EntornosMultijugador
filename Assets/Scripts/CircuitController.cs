@@ -14,6 +14,11 @@ public class CircuitController : MonoBehaviour
         get { return _totalLength; }
     }
 
+    public int TotalSegments
+    {
+        get { return _circuitPath.positionCount - 1; }
+    }
+
     void Start()
     {
         _circuitPath = GetComponent<LineRenderer>();
