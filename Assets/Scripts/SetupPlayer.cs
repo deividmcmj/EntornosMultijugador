@@ -1,6 +1,7 @@
 ﻿using System;
 using Mirror;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = System.Random;
 
 /*
@@ -30,6 +31,7 @@ public class SetupPlayer : NetworkBehaviour
     {
         base.OnStartServer();
         _id = NetworkServer.connections.Count - 1;
+
     }
 
     /// <summary>
@@ -40,9 +42,11 @@ public class SetupPlayer : NetworkBehaviour
     {
         base.OnStartClient();
         _playerInfo.ID = _id;
-        _playerInfo.Name = "Player" + _id;
         _playerInfo.CurrentLap = 0;
         _polePositionManager.AddPlayer(_playerInfo);
+        CmdSetDisplayName(_uiManager.inputName);
+        _playerInfo.Name = displayName;
+        Debug.Log(message: " [SERVER] Conectado: " + displayName);
     }
 
     /// <summary>
@@ -92,4 +96,43 @@ public class SetupPlayer : NetworkBehaviour
             _uiManager.UpdateUIDirectionMessage(message);
         }
     }
+
+    //Nombre del jugador, con su getter y setter
+    [SyncVar] [SerializeField] private string displayName;
+
+   
+    [Server]
+    public void SetDisplayName(string newName)
+    {
+        displayName = newName;
+    }
+
+    public string GetDisplayName()
+    {
+        return displayName;
+    }
+
+    [Command]
+    public void CmdSetDisplayName(string newDisplayName)
+    {
+        SetDisplayName(newDisplayName);
+    }
+
+
+    //Color del jugador, con su getter y setter
+
+    [SyncVar] [SerializeField] private Color displayColor;
+
+    [Server]
+    public void SetDisplayColor(Color newColor)
+    {
+        displayColor = newColor;
+    }
+
+    public Color GetDisplayColor()
+    {
+        return displayColor;
+    }
+
+    
 }

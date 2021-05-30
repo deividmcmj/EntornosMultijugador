@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public bool showGUI = true;
+    public string inputName = null;
 
     private MyNetworkManager m_NetworkManager;
 
@@ -59,15 +60,32 @@ public class UIManager : MonoBehaviour
 
     private void StartHost()
     {
-        m_NetworkManager.StartHost();
-        ActivateInGameHUD();
+        if(inputFieldName.text != "")
+        {
+            inputName = inputFieldName.text;
+            m_NetworkManager.StartHost();
+            ActivateInGameHUD();
+        }
+        else
+        {
+            Debug.Log(message: "Debes ponerte un nombre");
+        }
+
     }
 
     private void StartClient()
     {
-        m_NetworkManager.StartClient();
-        m_NetworkManager.networkAddress = inputFieldIP.text;
-        ActivateInGameHUD();
+        if (inputFieldName.text != "")
+        {
+            inputName = inputFieldName.text;
+            m_NetworkManager.StartClient();
+            m_NetworkManager.networkAddress = inputFieldIP.text;
+            ActivateInGameHUD();
+        }
+        else
+        {
+            Debug.Log(message: "Debes ponerte un nombre");
+        }
     }
 
     private void StartServer()
@@ -81,4 +99,6 @@ public class UIManager : MonoBehaviour
     {
         textWrongDirection.text = text;
     }
+
+
 }

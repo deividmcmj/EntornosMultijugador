@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerInfo : NetworkBehaviour
 {
+    /*
     //Nombre del jugador, con su getter y setter
     [SyncVar] [SerializeField] private string displayName;
 
@@ -19,7 +20,7 @@ public class PlayerInfo : NetworkBehaviour
         return displayName;
     }
 
-    public string Name { get; set; }
+    
 
     //Color del jugador, con su getter y setter
 
@@ -35,7 +36,9 @@ public class PlayerInfo : NetworkBehaviour
     {
         return displayColor;
     }
-
+    */
+    
+    public string Name { get; set; }
 
     public int ID { get; set; }
 
