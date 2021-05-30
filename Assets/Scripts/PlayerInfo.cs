@@ -41,13 +41,18 @@ public class PlayerInfo : NetworkBehaviour
 
     public int CurrentPosition { get; set; }
 
+    //Vuelta actual
     public int CurrentLap { get; set; }
+
+    //Vuelta actual que incrementa o decrementa en función de si se ha cruzado la meta correctamente o al revés
+    public int CorrectCurrentLap;
 
     //La posición del jugador en el circuito, la dirección que debe mirar para seguir adelante y su velocidad
     public Vector3 CurrentCircuitPosition, LookAtPoint, Speed;
 
-    //La dirección que sigue el jugador. Si sigue bien, tendrá valor positivo; si no, tendrá valor negativo
-    public float Direction;
+    //La dirección que sigue el jugador. Si sigue bien, tendrá valor positivo; si no, tendrá valor negativo.
+    //
+    public float Direction, ArcInfo;
 
     //La distancia total que ha recorrido un jugador.
     public float TotalDistance = 0;

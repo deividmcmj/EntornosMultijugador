@@ -83,6 +83,14 @@ public class PolePositionManager : NetworkBehaviour
         foreach (PlayerInfo player in _Players.Values)
         {
             ComputeCarArcLength(player.ID);
+            if (player.CorrectCurrentLap == 0)
+            {
+                player.TotalDistance = player.ArcInfo - _circuitController.CircuitLength;
+            }
+            else
+            {
+                player.TotalDistance = _circuitController.CircuitLength * (player.CorrectCurrentLap - 1) + player.ArcInfo;
+            }
         }
 
         //Se crea un array con los valores del diccionario de jugadores, y se ordena en función de quién ha
