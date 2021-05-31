@@ -44,10 +44,16 @@ public class SetupPlayer : NetworkBehaviour
         _playerInfo.ID = _id;
         _playerInfo.CurrentLap = 0;
         _polePositionManager.AddPlayer(_playerInfo);
-        CmdSetDisplayName(_uiManager.inputName);
-        _playerInfo.Name = displayName;
-        Debug.Log(message: " [SERVER] Conectado: " + displayName);
     }
+
+    public override void OnStartAuthority()
+    {
+        CmdSetDisplayName(_uiManager.inputName);
+        Debug.Log(message: "Conectado: " + displayName);
+        
+    }
+
+ 
 
     /// <summary>
     /// Called when the local player object has been set up.
@@ -55,6 +61,7 @@ public class SetupPlayer : NetworkBehaviour
     /// </summary>
     public override void OnStartLocalPlayer()
     {
+        
     }
 
     #endregion
@@ -104,7 +111,10 @@ public class SetupPlayer : NetworkBehaviour
     [Server]
     public void SetDisplayName(string newName)
     {
+        Debug.Log(message: "Mi nuevo nombre es: " + newName);
         displayName = newName;
+        _playerInfo.Name = displayName;
+
     }
 
     public string GetDisplayName()
