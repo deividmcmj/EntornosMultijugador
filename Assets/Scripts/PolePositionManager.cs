@@ -12,13 +12,11 @@ public class PolePositionManager : NetworkBehaviour
     public int numPlayers;
     private MyNetworkManager _networkManager;
 
-    //private readonly List<PlayerInfo> _players = new List<PlayerInfo>(4);
+    private readonly List<PlayerInfo> _players = new List<PlayerInfo>(4);
     private CircuitController _circuitController;
-    //private GameObject[] _debuggingSpheres;
+    private readonly List<GameObject> _debuggingSpheres = new List<GameObject>(4);
 
     //En lugar de usar listas y arrays, usamos diccionarios que guarden como clave el ID del jugador
-    private readonly Dictionary<int, PlayerInfo> _Players = new Dictionary<int, PlayerInfo>(4);
-    private readonly Dictionary<int, GameObject> _DebbuggingSpheres = new Dictionary<int, GameObject>(4);
 
     private void Awake()
     {
@@ -38,7 +36,7 @@ public class PolePositionManager : NetworkBehaviour
 
     private void Update()
     {
-        if (_Players.Count == 0)
+        if (_players.Count == 0)
             return;
 
         UpdateRaceProgress();
@@ -48,9 +46,9 @@ public class PolePositionManager : NetworkBehaviour
     {
         //_players.Add(player);
         //Creamos un jugador y su correspondiente esfera en el circuito
-        _Players.Add(player.ID, player);
-        _DebbuggingSpheres.Add(player.ID, GameObject.CreatePrimitive(PrimitiveType.Sphere));
-        _DebbuggingSpheres[player.ID].GetComponent<SphereCollider>().enabled = false;
+        _players.Add(player);
+        _debuggingSpheres.Add(GameObject.CreatePrimitive(PrimitiveType.Sphere));
+        _debuggingSpheres[player.ID].GetComponent<SphereCollider>().enabled = false;
     }
 
     private class PlayerInfoComparer : Comparer<PlayerInfo>
@@ -75,12 +73,13 @@ public class PolePositionManager : NetworkBehaviour
         // Update car arc-lengths
         /*
         float[] arcLengths = new float[_players.Count];
+        /*
         for (int i = 0; i < _players.Count; ++i)
         {
             arcLengths[i] = ComputeCarArcLength(i);
         }
         */
-        foreach (PlayerInfo player in _Players.Values)
+        foreach (PlayerInfo player in _players)
         {
             ComputeCarArcLength(player.ID);
             if (player.CorrectCurrentLap == 0)
@@ -93,10 +92,8 @@ public class PolePositionManager : NetworkBehaviour
             }
         }
 
-        //Se crea un array con los valores del diccionario de jugadores, y se ordena en función de quién ha
-        //recorrido mayor distancia
-        PlayerInfo[] players = _Players.Values.ToArray();
-        Array.Sort(players, (p, q) => {
+        _players.Sort(delegate(PlayerInfo p, PlayerInfo q)
+        {
             if (p.TotalDistance < q.TotalDistance)
             {
                 return 1;
@@ -108,7 +105,7 @@ public class PolePositionManager : NetworkBehaviour
         });
 
         string myRaceOrder = "";
-        foreach (PlayerInfo player in _Players.Values)
+        foreach (PlayerInfo player in _players)
         {
             myRaceOrder += player.Name + " ";
         }
@@ -121,7 +118,7 @@ public class PolePositionManager : NetworkBehaviour
         // Compute the projection of the car position to the closest circuit 
         // path segment and accumulate the arc-length along of the car along
         // the circuit.
-        Vector3 carPos = _Players[id].transform.position;
+        Vector3 carPos = _players[id].transform.position;
 
         int segIdx;
         float carDist;
@@ -133,7 +130,7 @@ public class PolePositionManager : NetworkBehaviour
             _circuitController.ComputeClosestPointArcLength(carPos, out segIdx, out carProj, out carDir, out carDist);
 
         //this._debuggingSpheres[id].transform.position = carProj;
-        _DebbuggingSpheres[id].transform.position = carProj;
+        _debuggingSpheres[id].transform.position = carProj;
 
         /*
         if (_Players[id].CurrentLap == 0)
@@ -146,22 +143,13 @@ public class PolePositionManager : NetworkBehaviour
                        (_Players[id].CurrentLap - 1);
         }
         */
-        Debug.LogFormat("Current: {0}, New: {1}", _Players[id].CurrentSegmentIdx, segIdx);
-        if (segIdx == 0 && _Players[id].CurrentSegmentIdx == _circuitController.TotalSegments - 1)
-        {
-            _Players[id].CrossLineForward();
-        }
-        else if (segIdx == _circuitController.TotalSegments - 1 && _Players[id].CurrentSegmentIdx == 0)
-        {
-            _Players[id].CrossLineBackwards();
-        }
 
         //Actualizamos la posición, la rotación y la dirección del jugador
-        _Players[id].CurrentCircuitPosition = carProj;
-        _Players[id].LookAtPoint = carDir;
-        _Players[id].Direction = Vector3.Dot((carDir - carProj).normalized, _Players[id].Speed.normalized);
-        _Players[id].ArcInfo = minArcL;
-        _Players[id].CurrentSegmentIdx = segIdx;
+        _players[id].CurrentCircuitPosition = carProj;
+        _players[id].LookAtPoint = carDir;
+        _players[id].Direction = Vector3.Dot((carDir - carProj).normalized, _players[id].Speed.normalized);
+        _players[id].ArcInfo = minArcL;
+        _players[id].CurrentSegmentIdx = segIdx;
 
         return minArcL;
     }
