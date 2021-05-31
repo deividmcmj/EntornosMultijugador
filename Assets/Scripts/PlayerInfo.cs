@@ -47,7 +47,7 @@ public class PlayerInfo : NetworkBehaviour
     //Vuelta actual
     public int CurrentLap { get; set; }
 
-    //Vuelta actual que incrementa o decrementa en función de si se ha cruzado la meta correctamente o al revés
+    //Vuelta actual que incrementa o decrementa en función de si se ha cruzado la meta correctamente o al revés.
     public int CorrectCurrentLap = 0;
 
     //La posición del jugador en el circuito, la dirección que debe mirar para seguir adelante y su velocidad
@@ -63,24 +63,8 @@ public class PlayerInfo : NetworkBehaviour
     //La distancia total que ha recorrido un jugador.
     public float TotalDistance = 0;
 
-    //
-    public bool crossLineBack = false;
-
-    public void CrossLineForward()
-    {
-        if (!crossLineBack)
-        {
-            CurrentLap++;
-        }
-        CorrectCurrentLap++;
-        crossLineBack = false;
-    }
-
-    public void CrossLineBackwards()
-    {
-        CorrectCurrentLap--;
-        crossLineBack = true;
-    }
+    //Devuelve true si el jugador va marcha atrás y false si no.
+    public bool Backwards = false;
 
     public override string ToString()
     {

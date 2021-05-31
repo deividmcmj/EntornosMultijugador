@@ -16,22 +16,10 @@ public class PolePositionManager : NetworkBehaviour
     private CircuitController _circuitController;
     private readonly List<GameObject> _debuggingSpheres = new List<GameObject>(4);
 
-    //En lugar de usar listas y arrays, usamos diccionarios que guarden como clave el ID del jugador
-
     private void Awake()
     {
         if (_networkManager == null) _networkManager = FindObjectOfType<MyNetworkManager>();
         if (_circuitController == null) _circuitController = FindObjectOfType<CircuitController>();
-        //En vez de crear tantas esferas como posibles conexiones puedan haber, se crean tantas esferas como
-        //jugadores conectados hayan
-        /*
-        _debuggingSpheres = new GameObject[_networkManager.maxConnections];
-        for (int i = 0; i < _networkManager.maxConnections; ++i)
-        {
-            _debuggingSpheres[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            _debuggingSpheres[i].GetComponent<SphereCollider>().enabled = false;
-        }
-        */
     }
 
     private void Update()
@@ -44,7 +32,6 @@ public class PolePositionManager : NetworkBehaviour
 
     public void AddPlayer(PlayerInfo player)
     {
-        //_players.Add(player);
         //Creamos un jugador y su correspondiente esfera en el circuito
         _players.Add(player);
         _debuggingSpheres.Add(GameObject.CreatePrimitive(PrimitiveType.Sphere));
@@ -129,7 +116,6 @@ public class PolePositionManager : NetworkBehaviour
         float minArcL =
             _circuitController.ComputeClosestPointArcLength(carPos, out segIdx, out carProj, out carDir, out carDist);
 
-        //this._debuggingSpheres[id].transform.position = carProj;
         _debuggingSpheres[id].transform.position = carProj;
 
         /*

@@ -152,6 +152,7 @@ public class PlayerController : NetworkBehaviour
             //Si el jugador está yendo en sentido contrario, se muestra un mensaje hasta que vuelva a seguir correctamente
             if (!Stopped && m_PlayerInfo.Direction < 0)
             {
+                m_PlayerInfo.Backwards = true;
                 m_WrongDirectionTimer += Time.deltaTime;
                 if (m_WrongDirectionTimer >= 2.0f)
                 {
@@ -160,6 +161,7 @@ public class PlayerController : NetworkBehaviour
             }
             else if (!Stopped && m_PlayerInfo.Direction > 0 && m_WrongDirectionTimer > 0.0f)
             {
+                m_PlayerInfo.Backwards = false;
                 m_WrongDirectionTimer = 0.0f;
                 m_SetupPlayer.UpdateDirectionMessage("");
             }

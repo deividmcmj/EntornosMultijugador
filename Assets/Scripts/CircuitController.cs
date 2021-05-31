@@ -16,7 +16,12 @@ public class CircuitController : MonoBehaviour
 
     public int TotalSegments
     {
-        get { return _circuitPath.positionCount - 1; }
+        get { return _circuitPath.positionCount; }
+    }
+
+    public Vector3[] PathPositions
+    {
+        get { return _pathPos; }
     }
 
     void Start()
