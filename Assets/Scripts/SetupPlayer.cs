@@ -50,10 +50,10 @@ public class SetupPlayer : NetworkBehaviour
     {
         CmdSetDisplayName(_uiManager.inputName);
         Debug.Log(message: "Conectado: " + displayName);
-        
+        CmdSetDisplayColor(_uiManager.color);
     }
 
- 
+
 
     /// <summary>
     /// Called when the local player object has been set up.
@@ -128,14 +128,18 @@ public class SetupPlayer : NetworkBehaviour
         SetDisplayName(newDisplayName);
     }
 
+ 
 
     //Color del jugador, con su getter y setter
 
-    [SyncVar] [SerializeField] private Color displayColor;
+    [SyncVar(hook = nameof(HandleDisplayColorUpdated))] [SerializeField] private Color displayColor;
+    [SerializeField] private Renderer displayColorRenderer = null;
+    [SerializeField] private Material carMaterial = null;
 
     [Server]
     public void SetDisplayColor(Color newColor)
     {
+        Debug.Log(message: "Mi nuevo color es: " + newColor);
         displayColor = newColor;
     }
 
@@ -144,5 +148,21 @@ public class SetupPlayer : NetworkBehaviour
         return displayColor;
     }
 
-    
+    [Command]
+    public void CmdSetDisplayColor(Color newDisplayColor)
+    {
+        SetDisplayColor(newDisplayColor);
+    }
+
+
+
+    private void HandleDisplayColorUpdated(Color oldColor, Color newColor)
+    {
+        
+        
+        //carM[1].color = newColor;
+        displayColorRenderer.materials[1].color = newColor;
+        //carMaterial.color = newColor;
+    }
+
 }

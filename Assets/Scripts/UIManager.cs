@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 {
     public bool showGUI = true;
     public string inputName = null;
+    public Color color; 
 
     private MyNetworkManager m_NetworkManager;
 
@@ -16,8 +17,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button buttonHost;
     [SerializeField] private Button buttonClient;
     [SerializeField] private Button buttonServer;
+    [SerializeField] private Button buttonColor;
     [SerializeField] private InputField inputFieldIP;
     [SerializeField] private InputField inputFieldName;
+
+    [SerializeField] private Image colorCube;
 
 
     [Header("In-Game HUD")] [SerializeField]
@@ -31,6 +35,7 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         m_NetworkManager = FindObjectOfType<MyNetworkManager>();
+        color = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
     }
 
     private void Start()
@@ -38,6 +43,8 @@ public class UIManager : MonoBehaviour
         buttonHost.onClick.AddListener(() => StartHost());
         buttonClient.onClick.AddListener(() => StartClient());
         buttonServer.onClick.AddListener(() => StartServer());
+        buttonColor.onClick.AddListener(() => NewColor());
+
         ActivateMainMenu();
     }
 
@@ -93,6 +100,15 @@ public class UIManager : MonoBehaviour
         m_NetworkManager.StartServer();
         ActivateInGameHUD();
     }
+
+    //Función que cambia el color por uno al azar
+    private void NewColor()
+    {
+        color = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
+        colorCube.color = color;
+
+    }
+
 
     //Función que actualiza el texto para indicar la dirección de vuelta errónea
     public void UpdateUIDirectionMessage(string text)

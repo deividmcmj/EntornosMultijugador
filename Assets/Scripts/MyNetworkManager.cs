@@ -11,7 +11,7 @@ public class MyNetworkManager : NetworkManager
         base.OnServerAddPlayer(conn);
 
         SetupPlayer player = conn.identity.GetComponent<SetupPlayer>();
-        player.SetDisplayColor(new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
+        //player.SetDisplayColor(new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
 
         Debug.Log(message: " [SERVER] Con color " + player.GetDisplayColor());
 
