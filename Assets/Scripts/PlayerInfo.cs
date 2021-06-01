@@ -47,6 +47,9 @@ public class PlayerInfo : NetworkBehaviour
     //Vuelta actual
     public int CurrentLap { get; set; }
 
+    //Número total de vueltas
+    public int TotalLaps;
+
     //Vuelta actual que incrementa o decrementa en función de si se ha cruzado la meta correctamente o al revés.
     public int CorrectCurrentLap = 0;
 
@@ -65,6 +68,32 @@ public class PlayerInfo : NetworkBehaviour
 
     //Devuelve true si el jugador va marcha atrás y false si no.
     public bool Backwards = false;
+
+    //Devuelve true si ha terminado la carrera y false si no.
+    public bool Finished = false;
+
+    public void CrossFinishLine()
+    {
+        if (!Backwards)
+        {
+            if (CurrentLap == TotalLaps)
+            {
+                Finished = true;
+            }
+            else
+            {
+                if (CorrectCurrentLap == CurrentLap)
+                {
+                    CurrentLap++;
+                }
+                CorrectCurrentLap++;
+            }
+        }
+        else
+        {
+            CorrectCurrentLap--;
+        }
+    }
 
     public override string ToString()
     {

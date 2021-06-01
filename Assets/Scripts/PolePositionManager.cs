@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class PolePositionManager : NetworkBehaviour
 {
+    public int maxNumPlayers = 4;
     public int numPlayers;
     private MyNetworkManager _networkManager;
 
@@ -58,14 +59,6 @@ public class PolePositionManager : NetworkBehaviour
     public void UpdateRaceProgress()
     {
         // Update car arc-lengths
-        /*
-        float[] arcLengths = new float[_players.Count];
-        /*
-        for (int i = 0; i < _players.Count; ++i)
-        {
-            arcLengths[i] = ComputeCarArcLength(i);
-        }
-        */
         foreach (PlayerInfo player in _players)
         {
             ComputeCarArcLength(player.ID);
@@ -77,6 +70,7 @@ public class PolePositionManager : NetworkBehaviour
             {
                 player.TotalDistance = _circuitController.CircuitLength * (player.CorrectCurrentLap - 1) + player.ArcInfo;
             }
+            Debug.LogFormat("{0}, {1}, {2}", player.CorrectCurrentLap, player.CurrentLap, player.Finished);
         }
 
         _players.Sort(delegate(PlayerInfo p, PlayerInfo q)
@@ -117,18 +111,6 @@ public class PolePositionManager : NetworkBehaviour
             _circuitController.ComputeClosestPointArcLength(carPos, out segIdx, out carProj, out carDir, out carDist);
 
         _debuggingSpheres[id].transform.position = carProj;
-
-        /*
-        if (_Players[id].CurrentLap == 0)
-        {
-            minArcL -= _circuitController.CircuitLength;
-        }
-        else
-        {
-            minArcL += _circuitController.CircuitLength *
-                       (_Players[id].CurrentLap - 1);
-        }
-        */
 
         //Actualizamos la posición, la rotación y la dirección del jugador
         _players[id].CurrentCircuitPosition = carProj;
