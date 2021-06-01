@@ -5,17 +5,6 @@ using UnityEngine;
 
 public class MyNetworkManager : NetworkManager
 {
-    public PolePositionManager _polePositionManager;
-
-    public override void Awake()
-    {
-        base.Awake();
-    }
-    public override void OnStartServer()
-    {
-        maxConnections = _polePositionManager.maxNumPlayers;
-        base.OnStartServer();
-    }
     public override void OnServerAddPlayer(NetworkConnection conn)
     {
         base.OnServerAddPlayer(conn);
@@ -25,13 +14,5 @@ public class MyNetworkManager : NetworkManager
 
         Debug.Log(message: " [SERVER] Con color " + player.GetDisplayColor());
 
-    }
-    public override void OnServerDisconnect(NetworkConnection conn)
-    {
-        base.OnServerDisconnect(conn);
-    }
-    public override void OnClientDisconnect(NetworkConnection conn)
-    {
-        base.OnClientDisconnect(conn);
     }
 }

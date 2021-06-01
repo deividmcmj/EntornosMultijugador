@@ -27,6 +27,9 @@ public class PlayerController : NetworkBehaviour
     private float InputSteering { get; set; }
     private float InputBrake { get; set; }
 
+    //Devuelve true si el jugador se puede mover y false si no.
+    public bool CanMove { get; set; }
+
     //Devuelve true si el coche está boca abajo y false si no.
     private bool UpsideDown
     {
@@ -81,6 +84,7 @@ public class PlayerController : NetworkBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
         m_PlayerInfo = GetComponent<PlayerInfo>();
         m_SetupPlayer = GetComponent<SetupPlayer>();
+        CanMove = true;
     }
 
     public void Update()
@@ -93,9 +97,18 @@ public class PlayerController : NetworkBehaviour
 
     public void FixedUpdate()
     {
-        InputSteering = Mathf.Clamp(InputSteering, -1, 1);
-        InputAcceleration = Mathf.Clamp(InputAcceleration, -1, 1);
-        InputBrake = Mathf.Clamp(InputBrake, 0, 1);
+        if (!CanMove)
+        {
+            InputSteering = 0f;
+            InputAcceleration = 0f;
+            InputBrake = 0f;
+        }
+        else
+        {
+            InputSteering = Mathf.Clamp(InputSteering, -1, 1);
+            InputAcceleration = Mathf.Clamp(InputAcceleration, -1, 1);
+            InputBrake = Mathf.Clamp(InputBrake, 0, 1);
+        }
 
         float steering = maxSteeringAngle * InputSteering;
 

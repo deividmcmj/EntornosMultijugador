@@ -72,6 +72,13 @@ public class PlayerInfo : NetworkBehaviour
     //Devuelve true si ha terminado la carrera y false si no.
     public bool Finished = false;
 
+    private SetupPlayer _setupPlayer;
+
+    private void Awake()
+    {
+        _setupPlayer = GetComponent<SetupPlayer>();
+    }
+
     public void CrossFinishLine()
     {
         if (!Backwards)
@@ -79,6 +86,7 @@ public class PlayerInfo : NetworkBehaviour
             if (CurrentLap == TotalLaps)
             {
                 Finished = true;
+                _setupPlayer.StopCar();
             }
             else
             {

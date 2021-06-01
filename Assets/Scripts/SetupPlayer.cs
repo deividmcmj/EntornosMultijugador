@@ -165,4 +165,14 @@ public class SetupPlayer : NetworkBehaviour
         //carMaterial.color = newColor;
     }
 
+    public void StartCar()
+    {
+        _playerController.CanMove = true;
+    }
+
+    public void StopCar()
+    {
+        _playerController.CanMove = false;
+    }
+
 }
