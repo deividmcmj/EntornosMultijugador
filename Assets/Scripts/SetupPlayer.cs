@@ -82,6 +82,7 @@ public class SetupPlayer : NetworkBehaviour
         {
             _playerController.enabled = true;
             _playerController.OnSpeedChangeEvent += OnSpeedChangeEventHandler;
+            _polePositionManager.OnPositionChangeEvent += OnPositionChangeEventHandler;
             ConfigureCamera();
         }
     }
@@ -89,6 +90,11 @@ public class SetupPlayer : NetworkBehaviour
     void OnSpeedChangeEventHandler(float speed)
     {
         _uiManager.UpdateSpeed((int) speed * 5); // 5 for visualization purpose (km/h)
+    }
+
+    void OnPositionChangeEventHandler(string position)
+    {
+        _uiManager.UpdatePosition(position);
     }
 
     void ConfigureCamera()
@@ -134,7 +140,6 @@ public class SetupPlayer : NetworkBehaviour
 
     [SyncVar(hook = nameof(HandleDisplayColorUpdated))] [SerializeField] private Color displayColor;
     [SerializeField] private Renderer displayColorRenderer = null;
-    [SerializeField] private Material carMaterial = null;
 
     [Server]
     public void SetDisplayColor(Color newColor)
@@ -154,15 +159,9 @@ public class SetupPlayer : NetworkBehaviour
         SetDisplayColor(newDisplayColor);
     }
 
-
-
     private void HandleDisplayColorUpdated(Color oldColor, Color newColor)
     {
-        
-        
-        //carM[1].color = newColor;
         displayColorRenderer.materials[1].color = newColor;
-        //carMaterial.color = newColor;
     }
 
     public void StartCar()

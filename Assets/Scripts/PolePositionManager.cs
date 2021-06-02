@@ -11,11 +11,16 @@ public class PolePositionManager : NetworkBehaviour
 {
     public int maxNumPlayers = 4;
     public int numPlayers;
+    public string previousRaceOrder = "";
     private MyNetworkManager _networkManager;
 
     private readonly List<PlayerInfo> _players = new List<PlayerInfo>(4);
+    private List<PlayerInfo> current_players = new List<PlayerInfo>(4);
     private CircuitController _circuitController;
     private readonly List<GameObject> _debuggingSpheres = new List<GameObject>(4);
+
+    public event Action<string> OnPositionChangeEvent;
+
 
     private void Awake()
     {
@@ -61,6 +66,8 @@ public class PolePositionManager : NetworkBehaviour
         // Update car arc-lengths
         foreach (PlayerInfo player in _players)
         {
+
+
             ComputeCarArcLength(player.ID);
             if (player.CorrectCurrentLap == 0)
             {
@@ -72,7 +79,7 @@ public class PolePositionManager : NetworkBehaviour
             }
             Debug.LogFormat("{0}, {1}, {2}", player.CorrectCurrentLap, player.CurrentLap, player.Finished);
         }
-
+        
         _players.Sort(delegate(PlayerInfo p, PlayerInfo q)
         {
             if (p.TotalDistance < q.TotalDistance)
@@ -91,7 +98,27 @@ public class PolePositionManager : NetworkBehaviour
             myRaceOrder += player.Name + " ";
         }
 
+        if(!previousRaceOrder.Equals(myRaceOrder))
+        {
+            OnPositionChangeEvent(get_players());
+            previousRaceOrder = myRaceOrder;
+        }
+
+
         Debug.Log("El orden de carrera es: " + myRaceOrder);
+    }
+
+    public string get_players()
+    {
+        string myRaceOrder = "";
+        int i = 0;
+        foreach (PlayerInfo player in _players)
+        {
+            i++;
+            myRaceOrder += i + ". " + player.Name + "\n";
+        }
+
+        return myRaceOrder;
     }
 
     float ComputeCarArcLength(int id)

@@ -9,9 +9,10 @@ public class UIManager : MonoBehaviour
 {
     public bool showGUI = true;
     public string inputName = null;
-    public Color color; 
+    public Color color;
 
     private MyNetworkManager m_NetworkManager;
+    private PolePositionManager m_PolePositionManager;
 
     [Header("Main Menu")] [SerializeField] private GameObject mainMenu;
     [SerializeField] private Button buttonHost;
@@ -35,7 +36,10 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         m_NetworkManager = FindObjectOfType<MyNetworkManager>();
+        m_PolePositionManager = FindObjectOfType<PolePositionManager>();
+
         color = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
+        colorCube.color = color;
     }
 
     private void Start()
@@ -51,6 +55,11 @@ public class UIManager : MonoBehaviour
     public void UpdateSpeed(int speed)
     {
         textSpeed.text = "Speed " + speed + " Km/h";
+    }
+
+    public void UpdatePosition(string position)
+    {
+        textPosition.text = position;
     }
 
     private void ActivateMainMenu()

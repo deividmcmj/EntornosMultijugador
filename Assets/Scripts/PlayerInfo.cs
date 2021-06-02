@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
-public class PlayerInfo : NetworkBehaviour
+public class PlayerInfo : MonoBehaviour
 {
     /*
     //Nombre del jugador, con su getter y setter
@@ -86,7 +86,7 @@ public class PlayerInfo : NetworkBehaviour
             if (CurrentLap == TotalLaps)
             {
                 Finished = true;
-                _setupPlayer.StopCar();
+                //_setupPlayer.StopCar();
             }
             else
             {
