@@ -48,7 +48,7 @@ public class PlayerInfo : NetworkBehaviour
     public int CurrentLap { get; set; }
 
     //Número total de vueltas
-    public int TotalLaps;
+    public int TotalLaps = 3;
 
     //Vuelta actual que incrementa o decrementa en función de si se ha cruzado la meta correctamente o al revés.
     public int CorrectCurrentLap = 0;
