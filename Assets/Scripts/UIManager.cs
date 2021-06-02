@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateLaps(int laps)
     {
-        textLaps.text = "LAP: " + laps + " /4";
+        textLaps.text = "LAP: " + laps + " /3";
     }
 
     public void UpdatePosition(string position)

@@ -44,6 +44,12 @@ public class PolePositionManager : NetworkBehaviour
         _debuggingSpheres[player.ID].GetComponent<SphereCollider>().enabled = false;
     }
 
+    public void RemovePlayer(PlayerInfo player)
+    {
+        _players.Remove(player);
+        _debuggingSpheres.Remove(_debuggingSpheres[player.ID]);
+    }
+
     private class PlayerInfoComparer : Comparer<PlayerInfo>
     {
         float[] _arcLengths;
@@ -82,6 +88,15 @@ public class PolePositionManager : NetworkBehaviour
         
         _players.Sort(delegate(PlayerInfo p, PlayerInfo q)
         {
+            if (p.Finished && !q.Finished)
+            {
+                return -1;
+            }
+            else if (!p.Finished && q.Finished)
+            {
+                return 1;
+            }
+
             if (p.TotalDistance < q.TotalDistance)
             {
                 return 1;
