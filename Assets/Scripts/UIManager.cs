@@ -57,6 +57,11 @@ public class UIManager : MonoBehaviour
         textSpeed.text = "Speed " + speed + " Km/h";
     }
 
+    public void UpdateLaps(int laps)
+    {
+        textLaps.text = "LAP: " + laps + " /4";
+    }
+
     public void UpdatePosition(string position)
     {
         textPosition.text = position;

@@ -49,7 +49,6 @@ public class SetupPlayer : NetworkBehaviour
     public override void OnStartAuthority()
     {
         CmdSetDisplayName(_uiManager.inputName);
-        Debug.Log(message: "Conectado: " + displayName);
         CmdSetDisplayColor(_uiManager.color);
     }
 
@@ -82,6 +81,7 @@ public class SetupPlayer : NetworkBehaviour
         {
             _playerController.enabled = true;
             _playerController.OnSpeedChangeEvent += OnSpeedChangeEventHandler;
+            _playerInfo.OnLapsChangeEvent += OnLapsChangeEventHandler;
             _polePositionManager.OnPositionChangeEvent += OnPositionChangeEventHandler;
             ConfigureCamera();
         }
@@ -90,6 +90,11 @@ public class SetupPlayer : NetworkBehaviour
     void OnSpeedChangeEventHandler(float speed)
     {
         _uiManager.UpdateSpeed((int) speed * 5); // 5 for visualization purpose (km/h)
+    }
+
+    void OnLapsChangeEventHandler(int laps)
+    {
+        _uiManager.UpdateLaps(laps);
     }
 
     void OnPositionChangeEventHandler(string position)
@@ -111,7 +116,7 @@ public class SetupPlayer : NetworkBehaviour
     }
 
     //Nombre del jugador, con su getter y setter
-    [SyncVar] [SerializeField] private string displayName;
+    [SyncVar(hook = nameof(HandleDisplayNameUpdated))] [SerializeField] private string displayName;
 
    
     [Server]
@@ -119,8 +124,6 @@ public class SetupPlayer : NetworkBehaviour
     {
         Debug.Log(message: "Mi nuevo nombre es: " + newName);
         displayName = newName;
-        _playerInfo.Name = displayName;
-
     }
 
     public string GetDisplayName()
@@ -134,7 +137,10 @@ public class SetupPlayer : NetworkBehaviour
         SetDisplayName(newDisplayName);
     }
 
- 
+    private void HandleDisplayNameUpdated(string oldName, string newName)
+    {
+        _playerInfo.Name = displayName;
+    }
 
     //Color del jugador, con su getter y setter
 

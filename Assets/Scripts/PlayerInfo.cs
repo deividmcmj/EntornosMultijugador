@@ -1,43 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
 public class PlayerInfo : MonoBehaviour
 {
-    /*
-    //Nombre del jugador, con su getter y setter
-    [SyncVar] [SerializeField] private string displayName;
-
-    [Server]
-    public void SetDisplayName(string newName)
-    {
-        displayName = newName;
-    }
-
-    public string GetDisplayName()
-    {
-        return displayName;
-    }
-
-    
-
-    //Color del jugador, con su getter y setter
-
-    [SyncVar] [SerializeField] private Color displayColor;
-
-    [Server]
-    public void SetDisplayColor(Color newColor)
-    {
-        displayColor = newColor;
-    }
-
-    public Color GetDisplayColor()
-    {
-        return displayColor;
-    }
-    */
-    
     public string Name { get; set; }
 
     public int ID { get; set; }
@@ -74,6 +42,8 @@ public class PlayerInfo : MonoBehaviour
 
     private SetupPlayer _setupPlayer;
 
+    public event Action<int> OnLapsChangeEvent;
+
     private void Awake()
     {
         _setupPlayer = GetComponent<SetupPlayer>();
@@ -97,6 +67,7 @@ public class PlayerInfo : MonoBehaviour
                 if (CorrectCurrentLap == CurrentLap)
                 {
                     CurrentLap++;
+                    OnLapsChangeEvent(CurrentLap);
                 }
                 CorrectCurrentLap++;
             }
