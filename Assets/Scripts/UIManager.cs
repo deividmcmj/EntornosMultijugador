@@ -32,7 +32,8 @@ public class UIManager : MonoBehaviour
 
 
     [Header("Results HUD")] [SerializeField] private GameObject resultsHUD;
-    [SerializeField] private Text finalResults;
+    //[SerializeField] private Text finalResults;
+    [SerializeField] private Text[] finalResults;
     [SerializeField] private Button buttonMenu;
 
     private void Awake()
@@ -70,8 +71,16 @@ public class UIManager : MonoBehaviour
         textPosition.text = position;
     }
 
+    public void UpdateFinalPosition(int i, string position)
+    {
+        finalResults[i].text = position;
+    }
+
     private void ActivateMainMenu()
     {
+        m_NetworkManager.StopHost();
+        m_NetworkManager.StopClient();
+        m_NetworkManager.StopServer();
         mainMenu.SetActive(true);
         inGameHUD.SetActive(false);
         resultsHUD.SetActive(false);

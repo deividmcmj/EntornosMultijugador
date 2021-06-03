@@ -66,7 +66,8 @@ public class PlayerInfo : MonoBehaviour
                 if (CorrectCurrentLap == CurrentLap)
                 {
                     CurrentLap++;
-                    OnLapsChangeEvent(CurrentLap);
+                    //OnLapsChangeEvent(CurrentLap);
+                    _setupPlayer.UpdateCurrentLap(CurrentLap);
                 }
                 CorrectCurrentLap++;
             }

@@ -81,30 +81,11 @@ public class SetupPlayer : NetworkBehaviour
         {
             _playerController.enabled = true;
             _playerController.OnSpeedChangeEvent += OnSpeedChangeEventHandler;
-            _playerInfo.OnLapsChangeEvent += OnLapsChangeEventHandler;
+            //_playerInfo.OnLapsChangeEvent += OnLapsChangeEventHandler;
             _polePositionManager.OnPositionChangeEvent += OnPositionChangeEventHandler;
+            _polePositionManager.OnFinalPositionChangeEvent += OnFinalPositionChangeEventHandler;
             ConfigureCamera();
         }
-    }
-
-    void OnSpeedChangeEventHandler(float speed)
-    {
-        _uiManager.UpdateSpeed((int) speed * 5); // 5 for visualization purpose (km/h)
-    }
-
-    void OnLapsChangeEventHandler(int laps)
-    {
-        _uiManager.UpdateLaps(laps);
-    }
-
-    void OnPositionChangeEventHandler(string position)
-    {
-        _uiManager.UpdatePosition(position);
-    }
-
-    void ConfigureCamera()
-    {
-        if (Camera.main != null) Camera.main.gameObject.GetComponent<CameraController>().m_Focus = this.gameObject;
     }
 
     public void UpdateDirectionMessage(string message)
@@ -113,6 +94,42 @@ public class SetupPlayer : NetworkBehaviour
         {
             _uiManager.UpdateUIDirectionMessage(message);
         }
+    }
+
+    void OnSpeedChangeEventHandler(float speed)
+    {
+        _uiManager.UpdateSpeed((int) speed * 5); // 5 for visualization purpose (km/h)
+    }
+    /*
+    void OnLapsChangeEventHandler(int laps)
+    {
+        if (isLocalPlayer)
+        {
+            _uiManager.UpdateLaps(laps);
+        }
+    }
+    */
+    public void UpdateCurrentLap(int laps)
+    {
+        if (isLocalPlayer)
+        {
+            _uiManager.UpdateLaps(laps);
+        }
+    }
+
+    void OnPositionChangeEventHandler(string position)
+    {
+        _uiManager.UpdatePosition(position);
+    }
+
+    void OnFinalPositionChangeEventHandler(int i, string position)
+    {
+        _uiManager.UpdateFinalPosition(i, position);
+    }
+
+    void ConfigureCamera()
+    {
+        if (Camera.main != null) Camera.main.gameObject.GetComponent<CameraController>().m_Focus = this.gameObject;
     }
 
     //Nombre del jugador, con su getter y setter

@@ -20,6 +20,7 @@ public class PolePositionManager : NetworkBehaviour
     private readonly List<GameObject> _debuggingSpheres = new List<GameObject>(4);
 
     public event Action<string> OnPositionChangeEvent;
+    public event Action<int, string> OnFinalPositionChangeEvent;
 
 
     private void Awake()
@@ -72,8 +73,6 @@ public class PolePositionManager : NetworkBehaviour
         // Update car arc-lengths
         foreach (PlayerInfo player in _players)
         {
-
-
             ComputeCarArcLength(player.ID);
             if (player.CorrectCurrentLap == 0)
             {
@@ -88,15 +87,6 @@ public class PolePositionManager : NetworkBehaviour
         
         _players.Sort(delegate(PlayerInfo p, PlayerInfo q)
         {
-            if (p.Finished && !q.Finished)
-            {
-                return -1;
-            }
-            else if (!p.Finished && q.Finished)
-            {
-                return 1;
-            }
-
             if (p.TotalDistance < q.TotalDistance)
             {
                 return 1;
@@ -110,6 +100,7 @@ public class PolePositionManager : NetworkBehaviour
         string myRaceOrder = "";
         foreach (PlayerInfo player in _players)
         {
+            player.CurrentPosition = _players.IndexOf(player) + 1;
             myRaceOrder += player.Name + " ";
         }
 
@@ -119,8 +110,13 @@ public class PolePositionManager : NetworkBehaviour
             previousRaceOrder = myRaceOrder;
         }
 
-
-        Debug.Log("El orden de carrera es: " + myRaceOrder);
+        foreach (PlayerInfo player in _players)
+        {
+            if (player.Finished)
+            {
+                OnFinalPositionChangeEvent(player.CurrentPosition - 1, player.CurrentPosition + ": " + player.Name);
+            }
+        }
     }
 
     public string get_players()
