@@ -49,7 +49,6 @@ public class PlayerInfo : MonoBehaviour
         _setupPlayer = GetComponent<SetupPlayer>();
     }
 
-    [Server]
     public void CrossFinishLine()
     {
         if (!Backwards)

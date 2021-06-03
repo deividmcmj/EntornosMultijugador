@@ -21,17 +21,19 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button buttonColor;
     [SerializeField] private InputField inputFieldIP;
     [SerializeField] private InputField inputFieldName;
-
     [SerializeField] private Image colorCube;
 
 
-    [Header("In-Game HUD")] [SerializeField]
-    private GameObject inGameHUD;
-
+    [Header("In-Game HUD")] [SerializeField] private GameObject inGameHUD;
     [SerializeField] private Text textSpeed;
     [SerializeField] private Text textLaps;
     [SerializeField] private Text textPosition;
     [SerializeField] private Text textWrongDirection;
+
+
+    [Header("Results HUD")] [SerializeField] private GameObject resultsHUD;
+    [SerializeField] private Text finalResults;
+    [SerializeField] private Button buttonMenu;
 
     private void Awake()
     {
@@ -48,6 +50,7 @@ public class UIManager : MonoBehaviour
         buttonClient.onClick.AddListener(() => StartClient());
         buttonServer.onClick.AddListener(() => StartServer());
         buttonColor.onClick.AddListener(() => NewColor());
+        buttonMenu.onClick.AddListener(() => ActivateMainMenu());
 
         ActivateMainMenu();
     }
@@ -71,12 +74,21 @@ public class UIManager : MonoBehaviour
     {
         mainMenu.SetActive(true);
         inGameHUD.SetActive(false);
+        resultsHUD.SetActive(false);
     }
 
     private void ActivateInGameHUD()
     {
         mainMenu.SetActive(false);
         inGameHUD.SetActive(true);
+        resultsHUD.SetActive(false);
+    }
+
+    private void ActivateResultsHUD()
+    {
+        mainMenu.SetActive(false);
+        inGameHUD.SetActive(false);
+        resultsHUD.SetActive(true);
     }
 
     private void StartHost()
@@ -130,5 +142,8 @@ public class UIManager : MonoBehaviour
         textWrongDirection.text = text;
     }
 
-
+    public void FinishRace()
+    {
+        ActivateResultsHUD();
+    }
 }

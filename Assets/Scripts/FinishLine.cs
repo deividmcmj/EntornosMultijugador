@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class FinishLine : MonoBehaviour
 {
+    private UIManager _uiManager;
+    private void Awake()
+    {
+        _uiManager = FindObjectOfType<UIManager>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         other.gameObject.GetComponent<PlayerInfo>().CrossFinishLine();
+        if (other.gameObject.GetComponent<PlayerInfo>().Finished)
+        {
+            _uiManager.FinishRace();
+        }
     }
 }
