@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
-public class PlayerInfo : MonoBehaviour
+public class PlayerInfo : NetworkBehaviour
 {
     public string Name { get; set; }
 
@@ -16,7 +16,7 @@ public class PlayerInfo : MonoBehaviour
     public int CurrentLap { get; set; }
 
     //Número total de vueltas
-    public int TotalLaps = 3;
+    public int TotalLaps { get; set; }
 
     //Vuelta actual que incrementa o decrementa en función de si se ha cruzado la meta correctamente o al revés.
     public int CorrectCurrentLap = 0;
@@ -25,7 +25,6 @@ public class PlayerInfo : MonoBehaviour
     public Vector3 CurrentCircuitPosition, LookAtPoint, Speed;
 
     //La dirección que sigue el jugador. Si sigue bien, tendrá valor positivo; si no, tendrá valor negativo.
-    //
     public float Direction, ArcInfo;
 
     //Parte de la línea del recorrido en la que se encuentra un jugador
@@ -38,7 +37,25 @@ public class PlayerInfo : MonoBehaviour
     public bool Backwards = false;
 
     //Devuelve true si ha terminado la carrera y false si no.
-    public bool Finished = false;
+    [SyncVar] [SerializeField] private bool Finished = false;
+
+    public bool GetFinished()
+    {
+        return Finished;
+    }
+
+    [Server]
+    public void SetFinished(bool newFinished)
+    {
+        Finished = newFinished;
+    }    
+
+    [Command]
+    public void CmdSetFinished(bool newFinished)
+    {
+        SetFinished(newFinished);
+    }
+
 
     private SetupPlayer _setupPlayer;
 
@@ -59,7 +76,8 @@ public class PlayerInfo : MonoBehaviour
                 Camera.main.gameObject.GetComponent<CameraController>().m_Focus = null;
                 Camera.main.gameObject.GetComponent<Transform>().position = new Vector3(0, 2.82f, -10);
                 Camera.main.gameObject.GetComponent<Transform>().rotation = Quaternion.Euler(0, 0, 0);
-                Finished = true;
+                //Finished = true;
+                CmdSetFinished(true);
             }
             else
             {

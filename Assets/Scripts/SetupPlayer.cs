@@ -12,7 +12,8 @@ using Random = System.Random;
 public class SetupPlayer : NetworkBehaviour
 {
     [SyncVar] private int _id;
-    [SyncVar] private string _name;
+    [SyncVar] private int _totalLaps;
+
 
     private UIManager _uiManager;
     private MyNetworkManager _networkManager;
@@ -31,7 +32,6 @@ public class SetupPlayer : NetworkBehaviour
     {
         base.OnStartServer();
         _id = NetworkServer.connections.Count - 1;
-
     }
 
     /// <summary>
@@ -43,7 +43,10 @@ public class SetupPlayer : NetworkBehaviour
         base.OnStartClient();
         _playerInfo.ID = _id;
         _playerInfo.CurrentLap = 0;
+        _playerInfo.TotalLaps = 3;
         _polePositionManager.AddPlayer(_playerInfo);
+        Debug.Log(message: "Esto ocurre en OnStartClient de: " + _id);
+
     }
 
     public override void OnStartAuthority()
