@@ -108,7 +108,11 @@ public class PolePositionManager : NetworkBehaviour
 
         if(!previousRaceOrder.Equals(myRaceOrder))
         {
-            OnPositionChangeEvent(get_players());
+            if (OnPositionChangeEvent != null)
+            {
+                OnPositionChangeEvent(get_players());
+            }
+            
             previousRaceOrder = myRaceOrder;
         }
 
