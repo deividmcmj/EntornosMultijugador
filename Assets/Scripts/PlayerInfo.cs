@@ -73,9 +73,6 @@ public class PlayerInfo : NetworkBehaviour
             if (CurrentLap == TotalLaps)
             {
                 _setupPlayer.StopCar();
-                Camera.main.gameObject.GetComponent<CameraController>().m_Focus = null;
-                Camera.main.gameObject.GetComponent<Transform>().position = new Vector3(0, 2.82f, -10);
-                Camera.main.gameObject.GetComponent<Transform>().rotation = Quaternion.Euler(0, 0, 0);
                 //Finished = true;
                 CmdSetFinished(true);
             }

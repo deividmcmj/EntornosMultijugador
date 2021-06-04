@@ -17,10 +17,21 @@ public class CameraController : MonoBehaviour
 
     private Camera mainCamera;
 
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
+
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = this.GetComponent<Camera>();
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
+    }
+
+    public void Reset()
+    {
+        transform.position = initialPosition;
+        transform.rotation = initialRotation;
     }
 
     // Update is called once per frame

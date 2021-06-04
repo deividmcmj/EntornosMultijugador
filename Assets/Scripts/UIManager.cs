@@ -36,10 +36,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text[] finalResults;
     [SerializeField] private Button buttonMenu;
 
+    private CameraController m_camera;
+
     private void Awake()
     {
         m_NetworkManager = FindObjectOfType<MyNetworkManager>();
         m_PolePositionManager = FindObjectOfType<PolePositionManager>();
+        m_camera = FindObjectOfType<CameraController>();
 
         color = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f));
         colorCube.color = color;
@@ -154,5 +157,10 @@ public class UIManager : MonoBehaviour
     public void FinishRace()
     {
         ActivateResultsHUD();
+    }
+
+    public void ResetCamera()
+    {
+        m_camera.Reset();
     }
 }

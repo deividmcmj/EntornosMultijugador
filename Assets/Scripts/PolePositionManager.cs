@@ -22,6 +22,8 @@ public class PolePositionManager : NetworkBehaviour
     public event Action<string> OnPositionChangeEvent;
     public event Action<int, string> OnFinalPositionChangeEvent;
 
+    public bool InRace { get; set; }
+
 
     private void Awake()
     {
