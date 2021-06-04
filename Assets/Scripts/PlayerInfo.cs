@@ -84,8 +84,11 @@ public class PlayerInfo : NetworkBehaviour
                 if (CorrectCurrentLap == CurrentLap)
                 {
                     CurrentLap++;
-                    //OnLapsChangeEvent(CurrentLap);
-                    _setupPlayer.UpdateCurrentLap(CurrentLap);
+                    if(OnLapsChangeEvent != null)
+                    {
+                        OnLapsChangeEvent(CurrentLap);
+                    }
+           
                 }
                 CorrectCurrentLap++;
             }
