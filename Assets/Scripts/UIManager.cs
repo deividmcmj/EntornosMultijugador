@@ -32,8 +32,9 @@ public class UIManager : MonoBehaviour
 
 
     [Header("Results HUD")] [SerializeField] private GameObject resultsHUD;
-    //[SerializeField] private Text finalResults;
     [SerializeField] private Text[] finalResults;
+
+    [Header("Results HUD")] [SerializeField] private GameObject buttonResultsHUD;
     [SerializeField] private Button buttonMenu;
 
 
@@ -91,6 +92,7 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(true);
         inGameHUD.SetActive(false);
         resultsHUD.SetActive(false);
+        buttonResultsHUD.SetActive(false);
         abandonHUD.SetActive(false);
     }
 
@@ -99,6 +101,7 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(false);
         inGameHUD.SetActive(true);
         resultsHUD.SetActive(false);
+        buttonResultsHUD.SetActive(false);
         abandonHUD.SetActive(false);
     }
 
@@ -107,7 +110,13 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(false);
         inGameHUD.SetActive(false);
         resultsHUD.SetActive(true);
+        buttonResultsHUD.SetActive(false);
         abandonHUD.SetActive(false);
+    }
+
+    private void ActivateButtonResultsHUD()
+    {
+        buttonResultsHUD.SetActive(true);
     }
 
     private void ActivateAbandonHUD()
@@ -115,6 +124,7 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(false);
         inGameHUD.SetActive(false);
         resultsHUD.SetActive(false);
+        buttonResultsHUD.SetActive(false);
         abandonHUD.SetActive(true);
     }
 
@@ -172,6 +182,11 @@ public class UIManager : MonoBehaviour
     public void FinishRace()
     {
         ActivateResultsHUD();
+    }
+
+    public void ShowMenuButton()
+    {
+        ActivateButtonResultsHUD();
     }
 
     public void BackToMenu()

@@ -24,7 +24,27 @@ public class PolePositionManager : NetworkBehaviour
     public UIManager _uiManager;
     public SetupPlayer _setupPlayer;
 
-    public bool InRace { get; set; }
+    private int finishedPlayers = 0;
+
+    public bool AllFinished
+    {
+        get
+        {
+            return finishedPlayers == _players.Count;
+        }
+    }
+
+    public int Finished
+    {
+        get
+        {
+            return finishedPlayers;
+        }
+        set
+        {
+            finishedPlayers = value;
+        }
+    }
 
     public List<PlayerInfo> GetPlayers()
     {
@@ -76,7 +96,7 @@ public class PolePositionManager : NetworkBehaviour
             {
                 player.TotalDistance = _circuitController.CircuitLength * (player.CorrectCurrentLap - 1) + player.ArcInfo;
             }
-            Debug.LogFormat("{0}, {1}, {2}", player.CorrectCurrentLap, player.CurrentLap, player.GetFinished());
+            Debug.LogFormat("{0}, {1}, {2}, {3}", player.CorrectCurrentLap, player.CurrentLap, player.GetFinished(), finishedPlayers);
         }
         
         _players.Sort(delegate(PlayerInfo p, PlayerInfo q)
@@ -115,6 +135,11 @@ public class PolePositionManager : NetworkBehaviour
                 OnFinalPositionChangeEvent(player.CurrentPosition - 1, player.CurrentPosition + ": " + player.Name);
                 _uiManager.FinishRace();
             }
+        }
+
+        if (AllFinished)
+        {
+            _uiManager.ShowMenuButton();
         }
     }
 

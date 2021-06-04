@@ -58,12 +58,14 @@ public class PlayerInfo : NetworkBehaviour
 
 
     private SetupPlayer _setupPlayer;
+    private PolePositionManager _polePositionManager;
 
     public event Action<int> OnLapsChangeEvent;
 
     private void Awake()
     {
         _setupPlayer = GetComponent<SetupPlayer>();
+        _polePositionManager = FindObjectOfType<PolePositionManager>();
     }
 
     public void CrossFinishLine()
@@ -73,6 +75,7 @@ public class PlayerInfo : NetworkBehaviour
             if (CurrentLap == TotalLaps)
             {
                 _setupPlayer.StopCar();
+                _polePositionManager.Finished++;
                 //Finished = true;
                 CmdSetFinished(true);
             }
