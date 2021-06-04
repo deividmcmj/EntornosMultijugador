@@ -200,4 +200,11 @@ public class SetupPlayer : NetworkBehaviour
         _playerController.CanMove = false;
     }
 
+    public void StopAllCars()
+    {
+        foreach (PlayerInfo player in _polePositionManager.GetPlayers())
+        {
+            player.GetComponent<PlayerController>().CanMove = false;
+        }
+    }
 }

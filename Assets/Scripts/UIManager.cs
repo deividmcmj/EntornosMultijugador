@@ -36,6 +36,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text[] finalResults;
     [SerializeField] private Button buttonMenu;
 
+
+    [Header("Abandon HUD")] [SerializeField] private GameObject abandonHUD;
+    [SerializeField] private Text textAbandon;
+
     private CameraController m_camera;
 
     private void Awake()
@@ -87,6 +91,7 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(true);
         inGameHUD.SetActive(false);
         resultsHUD.SetActive(false);
+        abandonHUD.SetActive(false);
     }
 
     private void ActivateInGameHUD()
@@ -94,6 +99,7 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(false);
         inGameHUD.SetActive(true);
         resultsHUD.SetActive(false);
+        abandonHUD.SetActive(false);
     }
 
     private void ActivateResultsHUD()
@@ -101,6 +107,15 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(false);
         inGameHUD.SetActive(false);
         resultsHUD.SetActive(true);
+        abandonHUD.SetActive(false);
+    }
+
+    private void ActivateAbandonHUD()
+    {
+        mainMenu.SetActive(false);
+        inGameHUD.SetActive(false);
+        resultsHUD.SetActive(false);
+        abandonHUD.SetActive(true);
     }
 
     private void StartHost()
@@ -167,5 +182,10 @@ public class UIManager : MonoBehaviour
     public void BackToMenu()
     {
         ActivateMainMenu();
+    }
+
+    public void AbandonMenu()
+    {
+        ActivateAbandonHUD();
     }
 }

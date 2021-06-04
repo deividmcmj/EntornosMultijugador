@@ -22,15 +22,21 @@ public class PolePositionManager : NetworkBehaviour
     public event Action<string> OnPositionChangeEvent;
     public event Action<int, string> OnFinalPositionChangeEvent;
     public UIManager _uiManager;
+    public SetupPlayer _setupPlayer;
 
     public bool InRace { get; set; }
 
+    public List<PlayerInfo> GetPlayers()
+    {
+        return _players;
+    }
 
     private void Awake()
     {
         if (_networkManager == null) _networkManager = FindObjectOfType<MyNetworkManager>();
         if (_circuitController == null) _circuitController = FindObjectOfType<CircuitController>();
         if (_uiManager == null) _uiManager = FindObjectOfType<UIManager>();
+        if (_setupPlayer == null) _setupPlayer = FindObjectOfType<SetupPlayer>();
     }
 
     private void Update()
