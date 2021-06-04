@@ -32,4 +32,13 @@ public class MyNetworkManager : NetworkManager
         }
         base.OnServerDisconnect(conn);
     }
+
+    public override void OnClientDisconnect(NetworkConnection conn)
+    {
+        if (conn.identity != null)
+        {
+            _polePositionManager.RemovePlayer(conn.identity.GetComponent<PlayerInfo>());
+        }
+        base.OnClientDisconnect(conn);
+    }
 }

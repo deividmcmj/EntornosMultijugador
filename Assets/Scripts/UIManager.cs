@@ -163,4 +163,9 @@ public class UIManager : MonoBehaviour
     {
         m_camera.Reset();
     }
+
+    public void BackToMenu()
+    {
+        ActivateMainMenu();
+    }
 }

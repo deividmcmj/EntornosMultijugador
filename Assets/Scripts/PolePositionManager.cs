@@ -21,6 +21,7 @@ public class PolePositionManager : NetworkBehaviour
 
     public event Action<string> OnPositionChangeEvent;
     public event Action<int, string> OnFinalPositionChangeEvent;
+    public UIManager _uiManager;
 
     public bool InRace { get; set; }
 
@@ -29,6 +30,7 @@ public class PolePositionManager : NetworkBehaviour
     {
         if (_networkManager == null) _networkManager = FindObjectOfType<MyNetworkManager>();
         if (_circuitController == null) _circuitController = FindObjectOfType<CircuitController>();
+        if (_uiManager == null) _uiManager = FindObjectOfType<UIManager>();
     }
 
     private void Update()
@@ -49,25 +51,9 @@ public class PolePositionManager : NetworkBehaviour
 
     public void RemovePlayer(PlayerInfo player)
     {
-        _players.Remove(player);
+        Destroy(_debuggingSpheres[player.ID]);
         _debuggingSpheres.Remove(_debuggingSpheres[player.ID]);
-    }
-
-    private class PlayerInfoComparer : Comparer<PlayerInfo>
-    {
-        float[] _arcLengths;
-
-        public PlayerInfoComparer(float[] arcLengths)
-        {
-            _arcLengths = arcLengths;
-        }
-
-        public override int Compare(PlayerInfo x, PlayerInfo y)
-        {
-            if (_arcLengths[x.ID] < _arcLengths[y.ID])
-                return 1;
-            else return -1;
-        }
+        _players.Remove(player);
     }
 
     public void UpdateRaceProgress()
