@@ -174,11 +174,6 @@ public class UIManager : MonoBehaviour
         ActivateResultsHUD();
     }
 
-    public void ResetCamera()
-    {
-        m_camera.Reset();
-    }
-
     public void BackToMenu()
     {
         ActivateMainMenu();

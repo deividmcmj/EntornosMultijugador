@@ -12,9 +12,5 @@ public class FinishLine : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         other.gameObject.GetComponent<PlayerInfo>().CrossFinishLine();
-        if (other.gameObject.GetComponent<PlayerInfo>().GetFinished())
-        {
-            _uiManager.FinishRace();
-        }
     }
 }
