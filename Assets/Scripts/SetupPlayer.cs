@@ -45,7 +45,6 @@ public class SetupPlayer : NetworkBehaviour
         _playerInfo.CurrentLap = 0;
         _playerInfo.TotalLaps = 3;
         _polePositionManager.AddPlayer(_playerInfo);
-        Debug.Log(message: "Esto ocurre en OnStartClient de: " + _id);
 
     }
 
