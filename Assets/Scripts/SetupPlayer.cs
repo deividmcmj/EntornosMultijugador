@@ -43,7 +43,7 @@ public class SetupPlayer : NetworkBehaviour
         base.OnStartClient();
         _playerInfo.ID = _id;
         _playerInfo.CurrentLap = 0;
-        _playerInfo.TotalLaps = 1;
+        _playerInfo.TotalLaps = 3;
         _polePositionManager.AddPlayer(_playerInfo);
 
     }
