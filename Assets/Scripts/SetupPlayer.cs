@@ -85,8 +85,9 @@ public class SetupPlayer : NetworkBehaviour
             _playerController.enabled = true;
             _playerController.OnSpeedChangeEvent += OnSpeedChangeEventHandler;
             _playerInfo.OnLapsChangeEvent += OnLapsChangeEventHandler;
+            _playerInfo.OnFinalPositionChangeEvent += OnFinalPositionChangeEventHandler;
             _polePositionManager.OnPositionChangeEvent += OnPositionChangeEventHandler;
-            _polePositionManager.OnFinalPositionChangeEvent += OnFinalPositionChangeEventHandler;
+            //_polePositionManager.OnFinalPositionChangeEvent += OnFinalPositionChangeEventHandler;
             ConfigureCamera();
         }
     }

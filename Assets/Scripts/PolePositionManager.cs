@@ -87,6 +87,18 @@ public class PolePositionManager : NetworkBehaviour
 
     public void UpdateRaceProgress()
     {
+        if (_players.Count >= 2)
+        {
+            _uiManager.ShowStartButton();
+        }
+
+        if (_uiManager.inGame)
+        {
+            foreach (PlayerInfo player in _players)
+            {
+                player.GetComponent<SetupPlayer>().StartCar();
+            }
+        }
         // Update car arc-lengths
         foreach (PlayerInfo player in _players)
         {
@@ -99,7 +111,7 @@ public class PolePositionManager : NetworkBehaviour
             {
                 player.TotalDistance = _circuitController.CircuitLength * (player.CorrectCurrentLap - 1) + player.ArcInfo;
             }
-            Debug.LogFormat("{0}, {1}, {2}, {3}", player.CorrectCurrentLap, player.CurrentLap, player.GetFinished(), finishedPlayers);
+            Debug.LogFormat("{0}, {1}, {2}, {3}, {4}", player.CorrectCurrentLap, player.CurrentLap, player.GetFinished(), finishedPlayers, player.FinalPosition);
         }
         
         _players.Sort(delegate(PlayerInfo p, PlayerInfo q)
@@ -136,7 +148,9 @@ public class PolePositionManager : NetworkBehaviour
         {
             if (player.GetFinished())
             {
-                OnFinalPositionChangeEvent(player.CurrentPosition - 1, player.CurrentPosition + ": " + player.Name);
+                //OnFinalPositionChangeEvent(player.CurrentPosition - 1, player.CurrentPosition + ": " + player.Name);
+                Debug.Log(message: "Terminé");
+                player.FinishRace();
             }
         }
 

@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public bool showGUI = true;
     public string inputName = null;
     public Color color;
+    public bool inGame = false;
 
     private MyNetworkManager m_NetworkManager;
     private PolePositionManager m_PolePositionManager;
@@ -24,6 +25,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image colorCube;
 
 
+    [Header("Results HUD")] [SerializeField] private GameObject waitForPlayersHUD;
+    [SerializeField] private Text waitText;
+
+
+    [Header("Results HUD")] [SerializeField] private GameObject buttonStartHUD;
+    [SerializeField] private Button buttonStart;
+
+
     [Header("In-Game HUD")] [SerializeField] private GameObject inGameHUD;
     [SerializeField] private Text textSpeed;
     [SerializeField] private Text textLaps;
@@ -34,12 +43,14 @@ public class UIManager : MonoBehaviour
     [Header("Results HUD")] [SerializeField] private GameObject resultsHUD;
     [SerializeField] private Text[] finalResults;
 
+
     [Header("Results HUD")] [SerializeField] private GameObject buttonResultsHUD;
     [SerializeField] private Button buttonMenu;
 
 
     [Header("Abandon HUD")] [SerializeField] private GameObject abandonHUD;
     [SerializeField] private Text textAbandon;
+    [SerializeField] private Button buttonMenu2;
 
     private CameraController m_camera;
 
@@ -58,8 +69,10 @@ public class UIManager : MonoBehaviour
         buttonHost.onClick.AddListener(() => StartHost());
         buttonClient.onClick.AddListener(() => StartClient());
         buttonServer.onClick.AddListener(() => StartServer());
+        buttonStart.onClick.AddListener(() => StartRace());
         buttonColor.onClick.AddListener(() => NewColor());
         buttonMenu.onClick.AddListener(() => ActivateMainMenu());
+        buttonMenu2.onClick.AddListener(() => ActivateMainMenu());
 
         ActivateMainMenu();
     }
@@ -90,15 +103,35 @@ public class UIManager : MonoBehaviour
         m_NetworkManager.StopClient();
         m_NetworkManager.StopServer();
         mainMenu.SetActive(true);
+        waitForPlayersHUD.SetActive(false);
+        buttonStartHUD.SetActive(false);
         inGameHUD.SetActive(false);
         resultsHUD.SetActive(false);
         buttonResultsHUD.SetActive(false);
         abandonHUD.SetActive(false);
     }
 
+    private void ActivateWaitScreen()
+    {
+        mainMenu.SetActive(false);
+        waitForPlayersHUD.SetActive(true);
+        buttonStartHUD.SetActive(false);
+        inGameHUD.SetActive(false);
+        resultsHUD.SetActive(false);
+        buttonResultsHUD.SetActive(false);
+        abandonHUD.SetActive(false);
+    }
+
+    private void ActivateStartButton()
+    {
+        buttonStartHUD.SetActive(true);
+    }
+
     private void ActivateInGameHUD()
     {
         mainMenu.SetActive(false);
+        waitForPlayersHUD.SetActive(false);
+        buttonStartHUD.SetActive(false);
         inGameHUD.SetActive(true);
         resultsHUD.SetActive(false);
         buttonResultsHUD.SetActive(false);
@@ -108,9 +141,10 @@ public class UIManager : MonoBehaviour
     private void ActivateResultsHUD()
     {
         mainMenu.SetActive(false);
+        waitForPlayersHUD.SetActive(false);
+        buttonStartHUD.SetActive(false);
         inGameHUD.SetActive(false);
         resultsHUD.SetActive(true);
-        //buttonResultsHUD.SetActive(false);
         abandonHUD.SetActive(false);
     }
 
@@ -127,6 +161,8 @@ public class UIManager : MonoBehaviour
     private void ActivateAbandonHUD()
     {
         mainMenu.SetActive(false);
+        waitForPlayersHUD.SetActive(false);
+        buttonStartHUD.SetActive(false);
         inGameHUD.SetActive(false);
         resultsHUD.SetActive(false);
         buttonResultsHUD.SetActive(false);
@@ -139,7 +175,7 @@ public class UIManager : MonoBehaviour
         {
             inputName = inputFieldName.text;
             m_NetworkManager.StartHost();
-            ActivateInGameHUD();
+            ActivateWaitScreen();
         }
         else
         {
@@ -155,7 +191,7 @@ public class UIManager : MonoBehaviour
             inputName = inputFieldName.text;
             m_NetworkManager.StartClient();
             m_NetworkManager.networkAddress = inputFieldIP.text;
-            ActivateInGameHUD();
+            ActivateWaitScreen();
         }
         else
         {
@@ -184,9 +220,20 @@ public class UIManager : MonoBehaviour
         textWrongDirection.text = text;
     }
 
+    public void StartRace()
+    {
+        inGame = true;
+        ActivateInGameHUD();
+    }
+
     public void FinishRace()
     {
         ActivateResultsHUD();
+    }
+
+    public void ShowStartButton()
+    {
+        ActivateStartButton();
     }
 
     public void ShowMenuButton()
