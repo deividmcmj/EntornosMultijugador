@@ -85,9 +85,9 @@ public class SetupPlayer : NetworkBehaviour
             _playerController.enabled = true;
             _playerController.OnSpeedChangeEvent += OnSpeedChangeEventHandler;
             _playerInfo.OnLapsChangeEvent += OnLapsChangeEventHandler;
-            _playerInfo.OnFinalPositionChangeEvent += OnFinalPositionChangeEventHandler;
+            //_playerInfo.OnFinalPositionChangeEvent += OnFinalPositionChangeEventHandler;
             _polePositionManager.OnPositionChangeEvent += OnPositionChangeEventHandler;
-            //_polePositionManager.OnFinalPositionChangeEvent += OnFinalPositionChangeEventHandler;
+            _polePositionManager.OnFinalPositionChangeEvent += OnFinalPositionChangeEventHandler;
             ConfigureCamera();
         }
     }
@@ -112,15 +112,7 @@ public class SetupPlayer : NetworkBehaviour
             _uiManager.UpdateLaps(laps);
         }
     }
- /*   
-    public void UpdateCurrentLap(int laps)
-    {
-        if (isLocalPlayer)
-        {
-            _uiManager.UpdateLaps(laps);
-        }
-    }
-*/
+
     void OnPositionChangeEventHandler(string position)
     {
         _uiManager.UpdatePosition(position);

@@ -69,7 +69,7 @@ public class PlayerInfo : NetworkBehaviour
     private PolePositionManager _polePositionManager;
 
     public event Action<int> OnLapsChangeEvent;
-    public event Action<int, string> OnFinalPositionChangeEvent;
+    //public event Action<int, string> OnFinalPositionChangeEvent;
 
     private void Awake()
     {
@@ -86,11 +86,6 @@ public class PlayerInfo : NetworkBehaviour
                 _setupPlayer.StopCar();
                 _polePositionManager.Finished++;
                 FinalPosition = _polePositionManager.GetPlayers().IndexOf(this);
-                if (OnFinalPositionChangeEvent != null)
-                {
-                    OnFinalPositionChangeEvent(FinalPosition, FinalPosition + 1 + ": " + Name);
-                }
-                //Finished = true;
                 CmdSetFinished(true);
             }
             else
