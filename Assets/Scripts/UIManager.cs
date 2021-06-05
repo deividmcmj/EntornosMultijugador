@@ -82,6 +82,7 @@ public class UIManager : MonoBehaviour
     public void UpdateFinalPosition(int i, string position)
     {
         finalResults[i].text = position;
+        Debug.Log(message: "He llegado: " + i);
     }
 
     private void ActivateMainMenu()
@@ -110,13 +111,18 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(false);
         inGameHUD.SetActive(false);
         resultsHUD.SetActive(true);
-        buttonResultsHUD.SetActive(false);
+        //buttonResultsHUD.SetActive(false);
         abandonHUD.SetActive(false);
     }
 
     private void ActivateButtonResultsHUD()
     {
         buttonResultsHUD.SetActive(true);
+    }
+
+    public void HideButtonResultsHUD()
+    {
+        buttonResultsHUD.SetActive(false);
     }
 
     private void ActivateAbandonHUD()

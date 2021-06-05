@@ -43,7 +43,7 @@ public class SetupPlayer : NetworkBehaviour
         base.OnStartClient();
         _playerInfo.ID = _id;
         _playerInfo.CurrentLap = 0;
-        _playerInfo.TotalLaps = 3;
+        _playerInfo.TotalLaps = 1;
         _polePositionManager.AddPlayer(_playerInfo);
 
     }
@@ -52,6 +52,7 @@ public class SetupPlayer : NetworkBehaviour
     {
         CmdSetDisplayName(_uiManager.inputName);
         CmdSetDisplayColor(_uiManager.color);
+        _uiManager.HideButtonResultsHUD();
     }
 
 

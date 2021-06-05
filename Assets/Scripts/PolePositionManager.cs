@@ -65,6 +65,7 @@ public class PolePositionManager : NetworkBehaviour
             return;
 
         UpdateRaceProgress();
+            
     }
 
     public void AddPlayer(PlayerInfo player)
@@ -80,6 +81,7 @@ public class PolePositionManager : NetworkBehaviour
         Destroy(_debuggingSpheres[player.ID]);
         _debuggingSpheres.Remove(_debuggingSpheres[player.ID]);
         _players.Remove(player);
+        finishedPlayers--;
     }
 
     public void UpdateRaceProgress()
@@ -112,6 +114,7 @@ public class PolePositionManager : NetworkBehaviour
         });
 
         string myRaceOrder = "";
+
         foreach (PlayerInfo player in _players)
         {
             player.CurrentPosition = _players.IndexOf(player) + 1;
@@ -133,6 +136,7 @@ public class PolePositionManager : NetworkBehaviour
             if (player.GetFinished())
             {
                 OnFinalPositionChangeEvent(player.CurrentPosition - 1, player.CurrentPosition + ": " + player.Name);
+                Debug.Log(message: "Cambiando el texto de mierda");
                 _uiManager.FinishRace();
             }
         }

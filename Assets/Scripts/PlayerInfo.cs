@@ -36,6 +36,7 @@ public class PlayerInfo : NetworkBehaviour
     //Devuelve true si el jugador va marcha atrás y false si no.
     public bool Backwards = false;
 
+
     //Devuelve true si ha terminado la carrera y false si no.
     [SyncVar] [SerializeField] private bool Finished = false;
 
@@ -55,12 +56,17 @@ public class PlayerInfo : NetworkBehaviour
     {
         SetFinished(newFinished);
     }
-
-
+    /*
+    private void HandleDisplayFinishedUpdated(bool oldBoolean, bool newBoolean)
+    {
+        OnFinalPositionChangeEvent(CurrentPosition - 1, CurrentPosition + ": " + Name);
+    }
+    */
     private SetupPlayer _setupPlayer;
     private PolePositionManager _polePositionManager;
 
     public event Action<int> OnLapsChangeEvent;
+    public event Action<int, string> OnFinalPositionChangeEvent;
 
     private void Awake()
     {
