@@ -75,6 +75,10 @@ public class PolePositionManager : NetworkBehaviour
         _players.Add(player);
         _debuggingSpheres.Add(GameObject.CreatePrimitive(PrimitiveType.Sphere));
         _debuggingSpheres[player.ID].GetComponent<SphereCollider>().enabled = false;
+        if (_players.Count >= 2)
+        {
+            _uiManager.ShowStartButton();
+        }
     }
 
     public void RemovePlayer(PlayerInfo player)
@@ -87,11 +91,6 @@ public class PolePositionManager : NetworkBehaviour
 
     public void UpdateRaceProgress()
     {
-        if (_players.Count >= 2)
-        {
-            _uiManager.ShowStartButton();
-        }
-
         if (_uiManager.inGame)
         {
             foreach (PlayerInfo player in _players)
@@ -148,9 +147,7 @@ public class PolePositionManager : NetworkBehaviour
         {
             if (player.GetFinished())
             {
-                //OnFinalPositionChangeEvent(player.CurrentPosition - 1, player.CurrentPosition + ": " + player.Name);
-                Debug.Log(message: "Terminé");
-                player.FinishRace();
+                OnFinalPositionChangeEvent(player.CurrentPosition - 1, player.CurrentPosition + ": " + player.Name);
             }
         }
 

@@ -124,6 +124,7 @@ public class UIManager : MonoBehaviour
 
     private void ActivateStartButton()
     {
+        Debug.Log(message: "Activando boton start");
         buttonStartHUD.SetActive(true);
     }
 
@@ -222,6 +223,8 @@ public class UIManager : MonoBehaviour
 
     public void StartRace()
     {
+        Debug.Log(message: "Desactivando boton start");
+        buttonStartHUD.SetActive(false);
         inGame = true;
         ActivateInGameHUD();
     }
