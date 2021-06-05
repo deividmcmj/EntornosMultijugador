@@ -82,7 +82,6 @@ public class UIManager : MonoBehaviour
     public void UpdateFinalPosition(int i, string position)
     {
         finalResults[i].text = position;
-        Debug.Log(message: "He llegado: " + i);
     }
 
     private void ActivateMainMenu()

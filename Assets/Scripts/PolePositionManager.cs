@@ -137,8 +137,6 @@ public class PolePositionManager : NetworkBehaviour
             if (player.GetFinished())
             {
                 OnFinalPositionChangeEvent(player.CurrentPosition - 1, player.CurrentPosition + ": " + player.Name);
-                Debug.Log(message: "Terminé");
-                player.FinishRace();
             }
         }
 

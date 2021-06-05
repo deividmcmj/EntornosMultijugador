@@ -38,7 +38,7 @@ public class PlayerInfo : NetworkBehaviour
 
 
     //Devuelve true si ha terminado la carrera y false si no.
-    [SyncVar] [SerializeField] private bool Finished = false;
+    [SyncVar(hook = nameof(HandleDisplayFinishedUpdated))] [SerializeField] private bool Finished = false;
 
     public bool GetFinished()
     {
@@ -48,23 +48,23 @@ public class PlayerInfo : NetworkBehaviour
     [Server]
     public void SetFinished(bool newFinished)
     {
+        Debug.Log(message: "Jugador " + ID + " finalizó la carrera");
         Finished = newFinished;
-    }    
+    }
 
     [Command]
     public void CmdSetFinished(bool newFinished)
     {
         SetFinished(newFinished);
     }
-    /*
+    
     private void HandleDisplayFinishedUpdated(bool oldBoolean, bool newBoolean)
     {
-        OnFinalPositionChangeEvent(CurrentPosition - 1, CurrentPosition + ": " + Name);
+        FinishRace();
     }
-    */
+    
     private SetupPlayer _setupPlayer;
     private PolePositionManager _polePositionManager;
-    private UIManager _uiManager;
 
     public event Action<int> OnLapsChangeEvent;
     public event Action<int, string> OnFinalPositionChangeEvent;
