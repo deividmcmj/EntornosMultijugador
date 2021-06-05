@@ -71,6 +71,18 @@ public class PlayerController : NetworkBehaviour
 
     public event Action<float> OnSpeedChangeEvent;
 
+    private Vector2 _movement;
+    private InputController _input;
+
+    private void OnEnable()
+    {
+        _input.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _input.Disable();
+    }
 
     //public delegate void OnSpeedChangeDelegate(float newVal);
 
@@ -86,13 +98,22 @@ public class PlayerController : NetworkBehaviour
         m_PlayerInfo = GetComponent<PlayerInfo>();
         m_SetupPlayer = GetComponent<SetupPlayer>();
         CanMove = true;
+
+        _input = new InputController();
     }
 
     public void Update()
     {
+        _movement = _input.Player.Movement.ReadValue<Vector2>();
+
+        InputAcceleration = _movement.y;
+        InputSteering =_movement.x;
+
+        /*
         InputAcceleration = Input.GetAxis("Vertical");
         InputSteering = Input.GetAxis(("Horizontal"));
         InputBrake = Input.GetAxis("Jump");
+        */
         Speed = m_Rigidbody.velocity.magnitude;
     }
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -282,6 +282,8 @@ MonoBehaviour:
   maxNumPlayers: 4
   numPlayers: 0
   previousRaceOrder: 
+  _uiManager: {fileID: 0}
+  _setupPlayer: {fileID: 0}
 --- !u!4 &1839589614
 Transform:
   m_ObjectHideFlags: 0
@@ -650,6 +652,7 @@ MonoBehaviour:
   autoCreatePlayer: 1
   playerSpawnMethod: 1
   spawnPrefabs: []
+  _polePositionManager: {fileID: 0}
 --- !u!4 &2140735093
 Transform:
   m_ObjectHideFlags: 0
@@ -908,7 +911,7 @@ PrefabInstance:
     - target: {fileID: 6415909393398217422, guid: 5c339809502a33749b546f6663bcfb75,
         type: 3}
       propertyPath: m_Text
-      value: 'LAP: 0/4'
+      value: 'LAP: 0/3'
       objectReference: {fileID: 0}
     - target: {fileID: 6415909394017212768, guid: 5c339809502a33749b546f6663bcfb75,
         type: 3}
