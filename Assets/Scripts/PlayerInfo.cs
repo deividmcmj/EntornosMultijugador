@@ -64,6 +64,7 @@ public class PlayerInfo : NetworkBehaviour
     */
     private SetupPlayer _setupPlayer;
     private PolePositionManager _polePositionManager;
+    private UIManager _uiManager;
 
     public event Action<int> OnLapsChangeEvent;
     public event Action<int, string> OnFinalPositionChangeEvent;
@@ -104,6 +105,12 @@ public class PlayerInfo : NetworkBehaviour
             CorrectCurrentLap--;
         }
     }
+
+    public void FinishRace()
+    {
+        _setupPlayer.FinishRace();
+    }
+
 
     public override string ToString()
     {

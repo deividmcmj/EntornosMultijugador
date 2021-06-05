@@ -16,6 +16,7 @@ public class PolePositionManager : NetworkBehaviour
 
     private readonly List<PlayerInfo> _players = new List<PlayerInfo>(4);
     private List<PlayerInfo> current_players = new List<PlayerInfo>(4);
+
     private CircuitController _circuitController;
     private readonly List<GameObject> _debuggingSpheres = new List<GameObject>(4);
 
@@ -136,8 +137,8 @@ public class PolePositionManager : NetworkBehaviour
             if (player.GetFinished())
             {
                 OnFinalPositionChangeEvent(player.CurrentPosition - 1, player.CurrentPosition + ": " + player.Name);
-                Debug.Log(message: "Cambiando el texto de mierda");
-                _uiManager.FinishRace();
+                Debug.Log(message: "Terminé");
+                player.FinishRace();
             }
         }
 

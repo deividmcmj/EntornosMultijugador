@@ -207,4 +207,9 @@ public class SetupPlayer : NetworkBehaviour
             player.GetComponent<PlayerController>().CanMove = false;
         }
     }
+
+    public void FinishRace()
+    {
+        _uiManager.FinishRace();
+    }
 }
