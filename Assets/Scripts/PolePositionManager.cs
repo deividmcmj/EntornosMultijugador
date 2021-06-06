@@ -88,15 +88,6 @@ public class PolePositionManager : NetworkBehaviour
             
     }
 
-    public void SetAllReady()
-    {
-        readyPlayers = _players.Count;
-        foreach (PlayerInfo player in _players)
-        {
-            player.CmdSetReady(true);
-        }
-    }
-
     public void AddPlayer(PlayerInfo player)
     {
         //Creamos un jugador y su correspondiente esfera en el circuito

@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour
         buttonHost.onClick.AddListener(() => StartHost());
         buttonClient.onClick.AddListener(() => StartClient());
         buttonServer.onClick.AddListener(() => StartServer());
-        buttonStart.onClick.AddListener(() => m_PolePositionManager.SetAllReady());
+        buttonStart.onClick.AddListener(() => FindObjectOfType<PlayerInfo>().InPosition());
         buttonColor.onClick.AddListener(() => NewColor());
         buttonMenu.onClick.AddListener(() => ActivateMainMenu());
         buttonMenu2.onClick.AddListener(() => ActivateMainMenu());

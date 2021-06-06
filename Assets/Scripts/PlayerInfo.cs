@@ -101,6 +101,12 @@ public class PlayerInfo : NetworkBehaviour
         _polePositionManager = FindObjectOfType<PolePositionManager>();
     }
 
+    public void InPosition()
+    {
+        _polePositionManager.SetReadyPlayers(_polePositionManager.GetReadyPlayers() + 1);
+        CmdSetReady(true);
+    }
+
     public void CrossFinishLine()
     {
         if (!Backwards)
