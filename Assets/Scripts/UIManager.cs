@@ -10,7 +10,6 @@ public class UIManager : MonoBehaviour
     public bool showGUI = true;
     public string inputName = null;
     public Color color;
-    public bool inGame = false;
     public bool results = false;
 
 
@@ -72,7 +71,7 @@ public class UIManager : MonoBehaviour
         buttonHost.onClick.AddListener(() => StartHost());
         buttonClient.onClick.AddListener(() => StartClient());
         buttonServer.onClick.AddListener(() => StartServer());
-        buttonStart.onClick.AddListener(() => StartRace());
+        buttonStart.onClick.AddListener(() => m_PolePositionManager.SetAllReady());
         buttonColor.onClick.AddListener(() => NewColor());
         buttonMenu.onClick.AddListener(() => ActivateMainMenu());
         buttonMenu2.onClick.AddListener(() => ActivateMainMenu());
@@ -235,7 +234,6 @@ public class UIManager : MonoBehaviour
     public void StartRace()
     {
         buttonStartHUD.SetActive(false);
-        inGame = true;
         ActivateInGameHUD();
     }
 

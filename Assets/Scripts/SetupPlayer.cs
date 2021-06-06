@@ -43,7 +43,7 @@ public class SetupPlayer : NetworkBehaviour
         base.OnStartClient();
         _playerInfo.ID = _id;
         _playerInfo.CurrentLap = 0;
-        _playerInfo.TotalLaps = 1;
+        _playerInfo.TotalLaps = 3;
         _polePositionManager.AddPlayer(_playerInfo);
 
     }
@@ -204,6 +204,11 @@ public class SetupPlayer : NetworkBehaviour
         {
             player.GetComponent<PlayerController>().CanMove = false;
         }
+    }
+
+    public void StartRace()
+    {
+        _uiManager.StartRace();
     }
 
     public void FinishRace()

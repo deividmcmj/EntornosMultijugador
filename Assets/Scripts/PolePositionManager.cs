@@ -29,8 +29,25 @@ public class PolePositionManager : NetworkBehaviour
     public UIManager _uiManager;
     public SetupPlayer _setupPlayer;
 
+    private int readyPlayers = 0;
     private int finishedPlayers = 0;
     private float countDown = 0;
+
+    public bool AllReady
+    {
+        get
+        {
+            return readyPlayers == _players.Count;
+        }
+    }
+    public int GetReadyPlayers()
+    {
+        return readyPlayers;
+    }
+    public void SetReadyPlayers(int value)
+    {
+        readyPlayers = value;
+    }
 
     public bool AllFinished
     {
@@ -39,7 +56,6 @@ public class PolePositionManager : NetworkBehaviour
             return finishedPlayers == _players.Count;
         }
     }
-
     public int GetFinishedPlayers()
     {
         return finishedPlayers;
@@ -72,6 +88,15 @@ public class PolePositionManager : NetworkBehaviour
             
     }
 
+    public void SetAllReady()
+    {
+        readyPlayers = _players.Count;
+        foreach (PlayerInfo player in _players)
+        {
+            player.CmdSetReady(true);
+        }
+    }
+
     public void AddPlayer(PlayerInfo player)
     {
         //Creamos un jugador y su correspondiente esfera en el circuito
@@ -100,12 +125,12 @@ public class PolePositionManager : NetworkBehaviour
 
     public void UpdateRaceProgress()
     {
-        if (_uiManager.inGame)
+        if (AllReady)
         {
             UpdateCountdown();
-            foreach (PlayerInfo player in _players)
+            if (countDown >= 3.0f)
             {
-                if (countDown >= 3.0f)
+                foreach (PlayerInfo player in _players)
                 {
                     player.GetComponent<SetupPlayer>().StartCar();
                 }
@@ -123,7 +148,7 @@ public class PolePositionManager : NetworkBehaviour
             {
                 player.TotalDistance = _circuitController.CircuitLength * (player.CorrectCurrentLap - 1) + player.ArcInfo;
             }
-            Debug.LogFormat("{0}, {1}, {2}, {3}, {4}, {5}", player.CorrectCurrentLap, player.CurrentLap, player.GetFinished(), finishedPlayers, player.FinalPosition, countDown);
+            Debug.LogFormat("{0}, {1}, {2}, {3}, {4}, {5}, {6}", player.CorrectCurrentLap, player.CurrentLap, player.GetFinished(), player.GetReady(), finishedPlayers, player.FinalPosition, countDown);
         }
         
         _players.Sort(delegate(PlayerInfo p, PlayerInfo q)

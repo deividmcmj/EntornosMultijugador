@@ -38,6 +38,31 @@ public class PlayerInfo : NetworkBehaviour
     //Devuelve true si el jugador va marcha atrás y false si no.
     public bool Backwards = false;
 
+    //Devuelve true si ha terminado la carrera y false si no.
+    [SyncVar(hook = nameof(HandleDisplayReadyUpdated))] [SerializeField] private bool Ready = false;
+
+    public bool GetReady()
+    {
+        return Ready;
+    }
+
+    [Server]
+    public void SetReady(bool newReady)
+    {
+        Ready = newReady;
+    }
+
+    [Command]
+    public void CmdSetReady(bool newReady)
+    {
+        SetReady(newReady);
+    }
+
+    private void HandleDisplayReadyUpdated(bool oldBoolean, bool newBoolean)
+    {
+        StartRace();
+    }
+
 
     //Devuelve true si ha terminado la carrera y false si no.
     [SyncVar(hook = nameof(HandleDisplayFinishedUpdated))] [SerializeField] private bool Finished = false;
@@ -107,6 +132,11 @@ public class PlayerInfo : NetworkBehaviour
         {
             CorrectCurrentLap--;
         }
+    }
+
+    public void StartRace()
+    {
+        _setupPlayer.StartRace();
     }
 
     public void FinishRace()
