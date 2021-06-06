@@ -15,6 +15,8 @@ public class PolePositionManager : NetworkBehaviour
     public string previousRaceOrder = "";
     private MyNetworkManager _networkManager;
 
+    public Mutex mutex = new Mutex();
+
     private readonly List<PlayerInfo> _players = new List<PlayerInfo>(4);
     private List<PlayerInfo> current_players = new List<PlayerInfo>(4);
 
@@ -36,17 +38,15 @@ public class PolePositionManager : NetworkBehaviour
         }
     }
 
-    public int Finished
+    public int GetFinishedPlayers()
     {
-        get
-        {
-            return finishedPlayers;
-        }
-        set
-        {
-            finishedPlayers = value;
-        }
+        return finishedPlayers;
     }
+    public void SetFinishedPlayers(int value)
+    {
+        finishedPlayers = value;
+    }
+
 
     public List<PlayerInfo> GetPlayers()
     {
@@ -76,6 +76,9 @@ public class PolePositionManager : NetworkBehaviour
         _players.Add(player);
         _debuggingSpheres.Add(GameObject.CreatePrimitive(PrimitiveType.Sphere));
         _debuggingSpheres[player.ID].GetComponent<SphereCollider>().enabled = false;
+
+        Debug.Log(message: "Ahora hay " + _players.Count + " jugadores");
+
         if (_players.Count >= 2)
         {
             _uiManager.ShowStartButton();
@@ -87,6 +90,9 @@ public class PolePositionManager : NetworkBehaviour
         Destroy(_debuggingSpheres[player.ID]);
         _debuggingSpheres.Remove(_debuggingSpheres[player.ID]);
         _players.Remove(player);
+
+        Debug.Log(message: "Ahora hay " + _players.Count + " jugadores");
+
         finishedPlayers--;
     }
 
@@ -138,7 +144,7 @@ public class PolePositionManager : NetworkBehaviour
         {
             if (OnPositionChangeEvent != null)
             {
-                OnPositionChangeEvent(get_players());
+                OnPositionChangeEvent(GetPositionPlayers());
             }
             
             previousRaceOrder = myRaceOrder;
@@ -150,7 +156,7 @@ public class PolePositionManager : NetworkBehaviour
         }
     }
 
-    public string get_players()
+    public string GetPositionPlayers()
     {
         string myRaceOrder = "";
         int i = 0;

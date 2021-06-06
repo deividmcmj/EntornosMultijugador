@@ -82,8 +82,9 @@ public class PlayerInfo : NetworkBehaviour
         {
             if (CurrentLap == TotalLaps)
             {
+                _setupPlayer.ActivarResultados();
                 _setupPlayer.StopCar();
-                _polePositionManager.Finished++;
+                _polePositionManager.SetFinishedPlayers(_polePositionManager.GetFinishedPlayers() + 1);
                 FinalPosition = _polePositionManager.GetPlayers().IndexOf(this);
                 _polePositionManager.PlayerFinished(this);
                 CmdSetFinished(true);

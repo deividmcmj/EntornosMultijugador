@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     public string inputName = null;
     public Color color;
     public bool inGame = false;
+    public bool results = false;
+
 
     private MyNetworkManager m_NetworkManager;
     private PolePositionManager m_PolePositionManager;
@@ -141,12 +143,15 @@ public class UIManager : MonoBehaviour
 
     private void ActivateResultsHUD()
     {
-        mainMenu.SetActive(false);
-        waitForPlayersHUD.SetActive(false);
-        buttonStartHUD.SetActive(false);
-        inGameHUD.SetActive(false);
-        resultsHUD.SetActive(true);
-        abandonHUD.SetActive(false);
+        if (results)
+        {
+            mainMenu.SetActive(false);
+            waitForPlayersHUD.SetActive(false);
+            buttonStartHUD.SetActive(false);
+            inGameHUD.SetActive(false);
+            resultsHUD.SetActive(true);
+            abandonHUD.SetActive(false);
+        }
     }
 
     private void ActivateButtonResultsHUD()
@@ -223,7 +228,6 @@ public class UIManager : MonoBehaviour
 
     public void StartRace()
     {
-        Debug.Log(message: "Desactivando boton start");
         buttonStartHUD.SetActive(false);
         inGame = true;
         ActivateInGameHUD();
