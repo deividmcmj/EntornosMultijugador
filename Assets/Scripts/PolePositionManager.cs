@@ -6,6 +6,7 @@ using System.Text;
 using Mirror;
 using Mirror.Cloud.Examples.Pong;
 using UnityEngine;
+using System.Threading;
 
 public class PolePositionManager : NetworkBehaviour
 {
@@ -143,14 +144,6 @@ public class PolePositionManager : NetworkBehaviour
             previousRaceOrder = myRaceOrder;
         }
 
-        foreach (PlayerInfo player in _players)
-        {
-            if (player.GetFinished())
-            {
-                OnFinalPositionChangeEvent(player.CurrentPosition - 1, player.CurrentPosition + ": " + player.Name);
-            }
-        }
-
         if (AllFinished)
         {
             _uiManager.ShowMenuButton();
@@ -196,5 +189,10 @@ public class PolePositionManager : NetworkBehaviour
         _players[id].CurrentSegmentIdx = segIdx;
 
         return minArcL;
+    }
+
+    public void PlayerFinished(PlayerInfo player)
+    {
+        OnFinalPositionChangeEvent(finishedPlayers - 1, finishedPlayers + ": " + player.Name);
     }
 }
