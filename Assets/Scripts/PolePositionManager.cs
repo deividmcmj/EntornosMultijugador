@@ -25,10 +25,12 @@ public class PolePositionManager : NetworkBehaviour
 
     public event Action<string> OnPositionChangeEvent;
     public event Action<int, string> OnFinalPositionChangeEvent;
+    public event Action<string> OnCountdownChangeEvent;
     public UIManager _uiManager;
     public SetupPlayer _setupPlayer;
 
     private int finishedPlayers = 0;
+    private float countDown = 0;
 
     public bool AllFinished
     {
@@ -100,9 +102,13 @@ public class PolePositionManager : NetworkBehaviour
     {
         if (_uiManager.inGame)
         {
+            UpdateCountdown();
             foreach (PlayerInfo player in _players)
             {
-                player.GetComponent<SetupPlayer>().StartCar();
+                if (countDown >= 3.0f)
+                {
+                    player.GetComponent<SetupPlayer>().StartCar();
+                }
             }
         }
         // Update car arc-lengths
@@ -117,7 +123,7 @@ public class PolePositionManager : NetworkBehaviour
             {
                 player.TotalDistance = _circuitController.CircuitLength * (player.CorrectCurrentLap - 1) + player.ArcInfo;
             }
-            Debug.LogFormat("{0}, {1}, {2}, {3}, {4}", player.CorrectCurrentLap, player.CurrentLap, player.GetFinished(), finishedPlayers, player.FinalPosition);
+            Debug.LogFormat("{0}, {1}, {2}, {3}, {4}, {5}", player.CorrectCurrentLap, player.CurrentLap, player.GetFinished(), finishedPlayers, player.FinalPosition, countDown);
         }
         
         _players.Sort(delegate(PlayerInfo p, PlayerInfo q)
@@ -195,6 +201,31 @@ public class PolePositionManager : NetworkBehaviour
         _players[id].CurrentSegmentIdx = segIdx;
 
         return minArcL;
+    }
+
+    public void UpdateCountdown()
+    {
+        countDown += Time.deltaTime;
+        if (countDown >= 0.0f && countDown < 1.0f)
+        {
+            OnCountdownChangeEvent("3");
+        }
+        else if (countDown >= 1.0f && countDown < 2.0f)
+        {
+            OnCountdownChangeEvent("2");
+        }
+        else if (countDown >= 2.0f && countDown < 3.0f)
+        {
+            OnCountdownChangeEvent("1");
+        }
+        else if (countDown >= 3.0f && countDown < 4.0f)
+        {
+            OnCountdownChangeEvent("YA!");
+        }
+        else
+        {
+            OnCountdownChangeEvent("");
+        }
     }
 
     public void PlayerFinished(PlayerInfo player)

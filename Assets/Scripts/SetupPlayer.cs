@@ -85,6 +85,7 @@ public class SetupPlayer : NetworkBehaviour
             _playerController.enabled = true;
             _playerController.OnSpeedChangeEvent += OnSpeedChangeEventHandler;
             _playerInfo.OnLapsChangeEvent += OnLapsChangeEventHandler;
+            _polePositionManager.OnCountdownChangeEvent += OnCountdownChangeEventHandler;
             _polePositionManager.OnPositionChangeEvent += OnPositionChangeEventHandler;
             _polePositionManager.OnFinalPositionChangeEvent += OnFinalPositionChangeEventHandler;
             ConfigureCamera();
@@ -97,6 +98,11 @@ public class SetupPlayer : NetworkBehaviour
         {
             _uiManager.UpdateUIDirectionMessage(message);
         }
+    }
+
+    void OnCountdownChangeEventHandler(string time)
+    {
+        _uiManager.UpdateCountdown(time);
     }
 
     void OnSpeedChangeEventHandler(float speed)

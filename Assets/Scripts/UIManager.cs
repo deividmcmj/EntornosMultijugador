@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text textLaps;
     [SerializeField] private Text textPosition;
     [SerializeField] private Text textWrongDirection;
+    [SerializeField] private Text textCountdown;
 
 
     [Header("Results HUD")] [SerializeField] private GameObject resultsHUD;
@@ -77,6 +78,11 @@ public class UIManager : MonoBehaviour
         buttonMenu2.onClick.AddListener(() => ActivateMainMenu());
 
         ActivateMainMenu();
+    }
+
+    public void UpdateCountdown(string time)
+    {
+        textCountdown.text = time;
     }
 
     public void UpdateSpeed(int speed)

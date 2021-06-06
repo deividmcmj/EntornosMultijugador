@@ -114,7 +114,7 @@ public class PlayerController : NetworkBehaviour
         InputSteering = Input.GetAxis(("Horizontal"));
         InputBrake = Input.GetAxis("Jump");
         */
-        Speed = m_Rigidbody.velocity.magnitude;
+        Speed = m_PlayerInfo.Speed.magnitude;
     }
 
     public void FixedUpdate()

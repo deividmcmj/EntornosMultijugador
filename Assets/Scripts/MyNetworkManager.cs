@@ -26,8 +26,10 @@ public class MyNetworkManager : NetworkManager
 
     public override void OnClientDisconnect(NetworkConnection conn)
     {
-        _polePositionManager._uiManager.AbandonMenu();
-        _polePositionManager._setupPlayer.StopAllCars();
+        if (conn.identity != null)
+        {
+            _polePositionManager.RemovePlayer(conn.identity.GetComponent<PlayerInfo>());
+        }
         base.OnClientDisconnect(conn);
     }
 }
