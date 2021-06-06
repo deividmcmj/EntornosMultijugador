@@ -176,6 +176,11 @@ public class PolePositionManager : NetworkBehaviour
         {
             _uiManager.ShowMenuButton();
         }
+
+        if (finishedPlayers < 0)
+        {
+            _uiManager.AbandonMenu();
+        }
     }
 
     public string GetPositionPlayers()
