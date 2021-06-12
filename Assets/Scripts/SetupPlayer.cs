@@ -63,7 +63,8 @@ public class SetupPlayer : NetworkBehaviour
     /// </summary>
     public override void OnStartLocalPlayer()
     {
-        
+        base.OnStartLocalPlayer();
+        _uiManager.buttonStart.onClick.AddListener(() => _playerInfo.InPosition());
     }
 
     #endregion

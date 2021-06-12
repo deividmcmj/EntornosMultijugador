@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
 
 
     [Header("Results HUD")] [SerializeField] private GameObject buttonStartHUD;
-    [SerializeField] private Button buttonStart;
+    [SerializeField] public Button buttonStart;
 
 
     [Header("In-Game HUD")] [SerializeField] private GameObject inGameHUD;
@@ -71,7 +71,6 @@ public class UIManager : MonoBehaviour
         buttonHost.onClick.AddListener(() => StartHost());
         buttonClient.onClick.AddListener(() => StartClient());
         buttonServer.onClick.AddListener(() => StartServer());
-        buttonStart.onClick.AddListener(() => FindObjectOfType<PlayerInfo>().InPosition());
         buttonColor.onClick.AddListener(() => NewColor());
         buttonMenu.onClick.AddListener(() => ActivateMainMenu());
         buttonMenu2.onClick.AddListener(() => ActivateMainMenu());
