@@ -2054,7 +2054,6 @@ MonoBehaviour:
   showGUI: 1
   inputName: 
   color: {r: 0, g: 0, b: 0, a: 0}
-  inGame: 0
   results: 0
   mainMenu: {fileID: 6415909394707280194}
   buttonHost: {fileID: 6415909394048335350}

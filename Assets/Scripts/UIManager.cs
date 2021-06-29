@@ -105,9 +105,6 @@ public class UIManager : MonoBehaviour
 
     private void ActivateMainMenu()
     {
-        m_NetworkManager.StopHost();
-        m_NetworkManager.StopClient();
-        m_NetworkManager.StopServer();
         mainMenu.SetActive(true);
         waitForPlayersHUD.SetActive(false);
         buttonStartHUD.SetActive(false);
