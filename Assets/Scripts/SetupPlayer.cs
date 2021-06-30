@@ -91,6 +91,15 @@ public class SetupPlayer : NetworkBehaviour
             _polePositionManager.OnFinalPositionChangeEvent += OnFinalPositionChangeEventHandler;
             ConfigureCamera();
         }
+        _uiManager.buttonStart.onClick.AddListener(() => UpdateReady());
+    }
+
+    public void UpdateReady()
+    {
+        if (isLocalPlayer)
+        {
+            _playerInfo.InPosition();
+        }
     }
 
     public void UpdateDirectionMessage(string message)

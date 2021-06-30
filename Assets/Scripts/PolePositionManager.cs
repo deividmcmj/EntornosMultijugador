@@ -139,7 +139,7 @@ public class PolePositionManager : NetworkBehaviour
             {
                 player.TotalDistance = _circuitController.CircuitLength * (player.CorrectCurrentLap - 1) + player.ArcInfo;
             }
-            Debug.LogFormat("{0}, {1}, {2}, {3}, {4}, {5}, {6}", player.CorrectCurrentLap, player.CurrentLap, player.GetFinished(), player.GetReady(), finishedPlayers, player.FinalPosition, countDown);
+            Debug.LogFormat("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", readyPlayers, player.CorrectCurrentLap, player.CurrentLap, player.GetFinished(), player.GetReady(), finishedPlayers, player.FinalPosition, countDown);
         }
         
         _players.Sort(delegate(PlayerInfo p, PlayerInfo q)
