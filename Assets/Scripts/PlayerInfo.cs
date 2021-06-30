@@ -38,7 +38,7 @@ public class PlayerInfo : NetworkBehaviour
     //Devuelve true si el jugador va marcha atrás y false si no.
     public bool Backwards = false;
 
-    //Devuelve true si ha terminado la carrera y false si no.
+    //Devuelve true si el jugador está listo y false si no.
     [SyncVar(hook = nameof(HandleDisplayReadyUpdated))] [SerializeField] private bool Ready = false;
 
     public bool GetReady()
@@ -60,7 +60,12 @@ public class PlayerInfo : NetworkBehaviour
 
     private void HandleDisplayReadyUpdated(bool oldBoolean, bool newBoolean)
     {
-        StartRace();
+        Debug.Log(message: Name + "Estoy ready");
+        if (isLocalPlayer)
+        {
+            StartRace();
+        }
+        
     }
 
 

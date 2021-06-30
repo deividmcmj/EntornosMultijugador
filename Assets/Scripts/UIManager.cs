@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public bool results = false;
 
 
+
     private MyNetworkManager m_NetworkManager;
     private PolePositionManager m_PolePositionManager;
 
@@ -226,6 +227,8 @@ public class UIManager : MonoBehaviour
     {
         textWrongDirection.text = text;
     }
+
+  
 
     public void StartRace()
     {
