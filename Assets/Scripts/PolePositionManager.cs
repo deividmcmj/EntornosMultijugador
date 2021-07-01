@@ -18,7 +18,6 @@ public class PolePositionManager : NetworkBehaviour
     public Mutex mutex = new Mutex();
 
     private readonly List<PlayerInfo> _players = new List<PlayerInfo>(4);
-    private List<PlayerInfo> current_players = new List<PlayerInfo>(4);
 
     private CircuitController _circuitController;
     private readonly List<GameObject> _debuggingSpheres = new List<GameObject>(4);
@@ -108,7 +107,7 @@ public class PolePositionManager : NetworkBehaviour
     public void RemovePlayer(PlayerInfo player)
     {
         //Destroy(_debuggingSpheres[player.ID]);
-        //_debuggingSpheres.Remove(_debuggingSpheres[player.ID]);
+        _debuggingSpheres.Remove(_debuggingSpheres[player.ID]);
         _players.Remove(player);
 
         Debug.Log(message: "Ahora hay " + _players.Count + " jugadores");
@@ -118,19 +117,7 @@ public class PolePositionManager : NetworkBehaviour
 
     public void UpdateRaceProgress()
     {
-        if (AllReady)
-        {
-            Debug.Log(message: "Todos readys");
-
-            UpdateCountdown();
-            if (countDown >= 3.0f)
-            {
-                foreach (PlayerInfo player in _players)
-                {
-                    player.GetComponent<SetupPlayer>().StartCar();
-                }
-            }
-        }
+   
         // Update car arc-lengths
         foreach (PlayerInfo player in _players)
         {
@@ -258,4 +245,40 @@ public class PolePositionManager : NetworkBehaviour
     {
         OnFinalPositionChangeEvent(finishedPlayers - 1, finishedPlayers + ": " + player.Name);
     }
+
+    public void StartCountDown()
+    {
+   
+        UpdateCountdown();
+        if (countDown >= 3.0f)
+        {
+            foreach (PlayerInfo player in _players)
+            {
+                player.GetComponent<SetupPlayer>().StartCar();
+            }
+        }
+    }
+
+    public IEnumerator ServerCountDown()
+    {
+        yield return new WaitForSeconds(3);
+        
+    }
+
+
+    public IEnumerator CountDown()
+    {
+        OnCountdownChangeEvent("3");
+        yield return new WaitForSeconds(1);
+        OnCountdownChangeEvent("2");
+        yield return new WaitForSeconds(1);
+        OnCountdownChangeEvent("1");
+        yield return new WaitForSeconds(1);
+        OnCountdownChangeEvent("YA");
+        foreach (PlayerInfo player in _players)
+        {
+            player.GetComponent<SetupPlayer>().StartCar();
+        }
+    }
+
 }

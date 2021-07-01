@@ -250,7 +250,7 @@ public class UIManager : MonoBehaviour
     }
 
   
-
+    
     public void StartRace()
     {
         buttonStartHUD.SetActive(false);

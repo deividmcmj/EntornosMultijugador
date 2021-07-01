@@ -55,9 +55,10 @@ public class PlayerInfo : NetworkBehaviour
     [Command]
     public void CmdSetReady(bool newReady)
     {
-        SetReady(newReady);
+        //SetReady(newReady);
+        StartRace();
     }
-
+    
     private void HandleDisplayReadyUpdated(bool oldBoolean, bool newBoolean)
     {
         Debug.Log(message: Name + "Estoy ready");
@@ -145,9 +146,11 @@ public class PlayerInfo : NetworkBehaviour
         }
     }
 
+    [Server]
     public void StartRace()
     {
         _setupPlayer.StartRace();
+        StartCoroutine(_polePositionManager.ServerCountDown());
     }
 
     public void FinishRace()

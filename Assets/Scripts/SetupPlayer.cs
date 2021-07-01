@@ -43,7 +43,7 @@ public class SetupPlayer : NetworkBehaviour
         base.OnStartClient();
         _playerInfo.ID = _id;
         _playerInfo.CurrentLap = 0;
-        _playerInfo.TotalLaps = 3;
+        _playerInfo.TotalLaps = 1;
         _polePositionManager.AddPlayer(_playerInfo);
 
     }
@@ -64,7 +64,7 @@ public class SetupPlayer : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
-        _uiManager.buttonStart.onClick.AddListener(() => _playerInfo.InPosition());
+        //_uiManager.buttonStart.onClick.AddListener(() => _playerInfo.InPosition());
     }
 
     #endregion
@@ -93,6 +93,7 @@ public class SetupPlayer : NetworkBehaviour
         }
         _uiManager.buttonStart.onClick.AddListener(() => UpdateReady());
     }
+
 
     public void UpdateReady()
     {
@@ -216,9 +217,11 @@ public class SetupPlayer : NetworkBehaviour
         }
     }
 
+    [ClientRpc]
     public void StartRace()
     {
         _uiManager.StartRace();
+        StartCoroutine(_polePositionManager.CountDown());
     }
 
     public void FinishRace()
