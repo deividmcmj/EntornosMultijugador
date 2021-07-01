@@ -18,9 +18,11 @@ public class MyNetworkManager : NetworkManager
     {
         if (conn.identity != null)
         {
+            Debug.Log(message: "Un jugador se ha desconectado");
             _polePositionManager.RemovePlayer(conn.identity.GetComponent<PlayerInfo>());
         }
         base.OnServerDisconnect(conn);
     }
-  
+
+
 }

@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     public bool results = false;
 
 
-
+    private PlayerInfo m_playerInfo;
     private MyNetworkManager m_NetworkManager;
     private PolePositionManager m_PolePositionManager;
 
@@ -59,6 +59,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        m_playerInfo = GetComponent<PlayerInfo>();
         m_NetworkManager = FindObjectOfType<MyNetworkManager>();
         m_PolePositionManager = FindObjectOfType<PolePositionManager>();
         m_camera = FindObjectOfType<CameraController>();
@@ -73,8 +74,8 @@ public class UIManager : MonoBehaviour
         buttonClient.onClick.AddListener(() => StartClient());
         buttonServer.onClick.AddListener(() => StartServer());
         buttonColor.onClick.AddListener(() => NewColor());
-        buttonMenu.onClick.AddListener(() => ActivateMainMenu());
-        buttonMenu2.onClick.AddListener(() => ActivateMainMenu());
+        buttonMenu.onClick.AddListener(() => ReturnToMainMenu());
+        buttonMenu2.onClick.AddListener(() => ReturnToMainMenu());
 
         ActivateMainMenu();
     }
@@ -115,6 +116,27 @@ public class UIManager : MonoBehaviour
         abandonHUD.SetActive(false);
     }
 
+    private void ReturnToMainMenu()
+    {
+        Debug.Log(message: "Volviendo al menú");
+
+        mainMenu.SetActive(true);
+        waitForPlayersHUD.SetActive(false);
+        buttonStartHUD.SetActive(false);
+        inGameHUD.SetActive(false);
+        resultsHUD.SetActive(false);
+        buttonResultsHUD.SetActive(false);
+        abandonHUD.SetActive(false);
+
+        m_PolePositionManager.RemovePlayer(m_playerInfo);
+        m_NetworkManager.StopClient();
+        m_NetworkManager.StopHost();
+
+
+
+    }
+
+
     private void ActivateWaitScreen()
     {
         mainMenu.SetActive(false);
@@ -128,7 +150,6 @@ public class UIManager : MonoBehaviour
 
     private void ActivateStartButton()
     {
-        Debug.Log(message: "Activando boton start");
         buttonStartHUD.SetActive(true);
     }
 

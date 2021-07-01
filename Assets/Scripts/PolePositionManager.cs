@@ -26,8 +26,10 @@ public class PolePositionManager : NetworkBehaviour
     public event Action<string> OnPositionChangeEvent;
     public event Action<int, string> OnFinalPositionChangeEvent;
     public event Action<string> OnCountdownChangeEvent;
+
     public UIManager _uiManager;
     public SetupPlayer _setupPlayer;
+
 
     private int readyPlayers = 0;
     private int finishedPlayers = 0;
@@ -105,8 +107,8 @@ public class PolePositionManager : NetworkBehaviour
 
     public void RemovePlayer(PlayerInfo player)
     {
-        Destroy(_debuggingSpheres[player.ID]);
-        _debuggingSpheres.Remove(_debuggingSpheres[player.ID]);
+        //Destroy(_debuggingSpheres[player.ID]);
+        //_debuggingSpheres.Remove(_debuggingSpheres[player.ID]);
         _players.Remove(player);
 
         Debug.Log(message: "Ahora hay " + _players.Count + " jugadores");
@@ -118,6 +120,8 @@ public class PolePositionManager : NetworkBehaviour
     {
         if (AllReady)
         {
+            Debug.Log(message: "Todos readys");
+
             UpdateCountdown();
             if (countDown >= 3.0f)
             {
@@ -139,7 +143,7 @@ public class PolePositionManager : NetworkBehaviour
             {
                 player.TotalDistance = _circuitController.CircuitLength * (player.CorrectCurrentLap - 1) + player.ArcInfo;
             }
-            Debug.LogFormat("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", readyPlayers, player.CorrectCurrentLap, player.CurrentLap, player.GetFinished(), player.GetReady(), finishedPlayers, player.FinalPosition, countDown);
+            //Debug.LogFormat("{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}", readyPlayers, player.CorrectCurrentLap, player.CurrentLap, player.GetFinished(), player.GetReady(), finishedPlayers, player.FinalPosition, countDown);
         }
         
         _players.Sort(delegate(PlayerInfo p, PlayerInfo q)
@@ -175,6 +179,7 @@ public class PolePositionManager : NetworkBehaviour
         if (AllFinished)
         {
             _uiManager.ShowMenuButton();
+            //finishedPlayers = -1;
         }
 
         if (finishedPlayers < 0)
