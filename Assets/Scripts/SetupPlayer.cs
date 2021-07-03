@@ -31,7 +31,7 @@ public class SetupPlayer : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-        _id = NetworkServer.connections.Count - 1;
+        //_id = NetworkServer.connections.Count - 1;
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ public class SetupPlayer : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-        _playerInfo.ID = _id;
+        _playerInfo.ID = NetworkServer.connections.Count - 1;
         _playerInfo.CurrentLap = 0;
         _playerInfo.TotalLaps = 1;
         _polePositionManager.AddPlayer(_playerInfo);
@@ -50,7 +50,7 @@ public class SetupPlayer : NetworkBehaviour
 
     public override void OnStartAuthority()
     {
-        CmdSetDisplayName(_uiManager.inputName);
+        CmdSetDisplayName(_uiManager.inputName + _playerInfo.ID);
         CmdSetDisplayColor(_uiManager.color);
         _uiManager.HideButtonResultsHUD();
     }

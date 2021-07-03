@@ -274,7 +274,9 @@ public class PolePositionManager : NetworkBehaviour
         yield return new WaitForSeconds(1);
         OnCountdownChangeEvent("1");
         yield return new WaitForSeconds(1);
-        OnCountdownChangeEvent("YA");
+        OnCountdownChangeEvent("YA!");
+        yield return new WaitForSeconds(1);
+        OnCountdownChangeEvent("");
         foreach (PlayerInfo player in _players)
         {
             player.GetComponent<SetupPlayer>().StartCar();
