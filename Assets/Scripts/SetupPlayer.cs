@@ -33,7 +33,7 @@ public class SetupPlayer : NetworkBehaviour
     {
         base.OnStartServer();
         _polePositionManager.AddPlayer(_playerInfo);
-        _newId = _polePositionManager.NumPlayers();
+        _newId = _polePositionManager.NumPlayers() -1;
     }
 
     /// <summary>
