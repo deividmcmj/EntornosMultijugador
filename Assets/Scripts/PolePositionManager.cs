@@ -182,12 +182,6 @@ public class PolePositionManager : NetworkBehaviour
             previousRaceOrder = myRaceOrder;
         }
 
-        if (AllFinished)
-        {
-            _uiManager.ShowMenuButton();
-            //finishedPlayers = -1;
-        }
-
         if (finishedPlayers < 0)
         {
             _uiManager.AbandonMenu();
@@ -237,14 +231,11 @@ public class PolePositionManager : NetworkBehaviour
 
     public void PlayerFinished(string name)
     {
-        if(OnFinalPositionChangeEvent != null)
-        {
-            OnFinalPositionChangeEvent(finishedPlayers - 1, finishedPlayers + ": " + name);
-        }
-        else
-        {
-            Debug.Log(message: "Pues es null: " + name);
+        OnFinalPositionChangeEvent(finishedPlayers - 1, finishedPlayers + ": " + name);
 
+        if (AllFinished)
+        {
+            ShowFinishButton();
         }
     }
 
@@ -287,5 +278,11 @@ public class PolePositionManager : NetworkBehaviour
     public void ShowAbandonHUD()
     {
         _uiManager.AbandonMenu();
+    }
+
+    [ClientRpc]
+    public void ShowFinishButton()
+    {
+        _uiManager.ShowMenuButton();
     }
 }

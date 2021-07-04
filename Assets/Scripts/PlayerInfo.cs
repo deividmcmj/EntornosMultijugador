@@ -100,6 +100,7 @@ public class PlayerInfo : NetworkBehaviour
 
     public event Action<int> OnLapsChangeEvent;
 
+
     private void Awake()
     {
         _setupPlayer = GetComponent<SetupPlayer>();
@@ -125,7 +126,8 @@ public class PlayerInfo : NetworkBehaviour
                 _polePositionManager.SetFinishedPlayers(_polePositionManager.GetFinishedPlayers() + 1);
                 FinalPosition = _polePositionManager.GetPlayers().IndexOf(this);
                 _polePositionManager.PlayerFinished(Name);
-                CmdSetFinished(true);
+                SetFinished(true);
+                //CmdSetFinished(true);
             }
             else
             {
