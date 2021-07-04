@@ -235,11 +235,7 @@ public class SetupPlayer : NetworkBehaviour
 
 
 
-
-
-
-
-
+    [ClientRpc]
     public void StartCar()
     {
         _playerController.CanMove = true;

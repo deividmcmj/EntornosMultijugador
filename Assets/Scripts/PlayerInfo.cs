@@ -58,7 +58,6 @@ public class PlayerInfo : NetworkBehaviour
         //SetReady(newReady);
         StartRace();
     }
-    
 
     private void HandleDisplayReadyUpdated(bool oldBoolean, bool newBoolean)
     {
@@ -161,7 +160,6 @@ public class PlayerInfo : NetworkBehaviour
 
     public void StartCar()
     {
-        Debug.Log(message: Name + " arrancando coche");
         _setupPlayer.StartCar();
     }
 

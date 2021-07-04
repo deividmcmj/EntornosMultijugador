@@ -47,7 +47,7 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-    private PlayerInfo m_PlayerInfo;
+    public PlayerInfo m_PlayerInfo;
 
     private Rigidbody m_Rigidbody;
     private SetupPlayer m_SetupPlayer;

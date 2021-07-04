@@ -233,7 +233,6 @@ public class PolePositionManager : NetworkBehaviour
         OnFinalPositionChangeEvent(finishedPlayers - 1, finishedPlayers + ": " + player.Name);
     }
 
-
    
     public IEnumerator ServerCountDown()
     {
