@@ -128,7 +128,7 @@ public class UIManager : MonoBehaviour
         buttonResultsHUD.SetActive(false);
         abandonHUD.SetActive(false);
 
-        m_PolePositionManager.RemovePlayer(m_playerInfo);
+        //m_PolePositionManager.RemovePlayer(m_playerInfo);
         m_NetworkManager.StopClient();
         m_NetworkManager.StopHost();
 

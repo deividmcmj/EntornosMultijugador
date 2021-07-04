@@ -41,14 +41,11 @@ public class PolePositionManager : NetworkBehaviour
         }
     }
 
-    public int numPlayers
+    [Server]
+    public int NumPlayers()
     {
-        get
-        {
-            return _players.Count;
-        }
+        return _players.Count;
     }
-
 
     public int GetReadyPlayers()
     {
@@ -112,16 +109,18 @@ public class PolePositionManager : NetworkBehaviour
             _uiManager.ShowStartButton();
         }
     }
-
+    
     public void RemovePlayer(PlayerInfo player)
     {
-        //Destroy(_debuggingSpheres[player.ID]);
-        _debuggingSpheres.Remove(_debuggingSpheres[player.ID]);
-        _players.Remove(player);
+        Debug.Log(message: "Desconectado jugador " + player.ID);
+
+        _players.RemoveAt(player.ID);
+        Destroy(_debuggingSpheres[player.ID]);
+        _debuggingSpheres.RemoveAt(player.ID);
 
         Debug.Log(message: "Ahora hay " + _players.Count + " jugadores");
 
-        finishedPlayers--;
+        //finishedPlayers--;
     }
 
     public void UpdateRaceProgress()
@@ -267,13 +266,13 @@ public class PolePositionManager : NetworkBehaviour
             }
         }
     }
-
+    /*
     public IEnumerator ServerCountDown()
     {
         yield return new WaitForSeconds(3);
         
     }
-
+    */
 
     public IEnumerator CountDown()
     {

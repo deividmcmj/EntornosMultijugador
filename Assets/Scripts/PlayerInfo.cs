@@ -150,7 +150,7 @@ public class PlayerInfo : NetworkBehaviour
     public void StartRace()
     {
         _setupPlayer.StartRace();
-        StartCoroutine(_polePositionManager.ServerCountDown());
+        //StartCoroutine(_polePositionManager.ServerCountDown());
     }
 
     public void FinishRace()

@@ -13,6 +13,7 @@ public class SetupPlayer : NetworkBehaviour
 {
     //[SyncVar] private int _id;
     [SyncVar] private int _totalLaps;
+    [SyncVar] private int _newId;
 
 
     private UIManager _uiManager;
@@ -31,21 +32,22 @@ public class SetupPlayer : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-
-        //_id = NetworkServer.connections.Count - 1;
+        _polePositionManager.AddPlayer(_playerInfo);
+        _newId = _polePositionManager.NumPlayers();
     }
 
     /// <summary>
     /// Called on every NetworkBehaviour when it is activated on a client.
     /// <para>Objects on the host have this function called, as there is a local client on the host. The values of SyncVars on object are guaranteed to be initialized correctly with the latest state from the server when this function is called on the client.</para>
     /// </summary>
+    /// 
+
     public override void OnStartClient()
     {
         base.OnStartClient();
         //_playerInfo.ID = NetworkServer.connections.Count - 1;
         _playerInfo.CurrentLap = 0;
         _playerInfo.TotalLaps = 1;
-        _polePositionManager.AddPlayer(_playerInfo);
 
     }
 
@@ -53,9 +55,8 @@ public class SetupPlayer : NetworkBehaviour
     {
         CmdSetDisplayName(_uiManager.inputName);
         CmdSetDisplayColor(_uiManager.color);
-        CmdSetID(_polePositionManager.numPlayers);
+        CmdSetID(_newId);
         //_uiManager.HideButtonResultsHUD();
-        Debug.Log(message: NetworkServer.connections);
     }
 
 
