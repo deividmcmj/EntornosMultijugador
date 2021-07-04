@@ -119,6 +119,11 @@ public class PolePositionManager : NetworkBehaviour
 
         Debug.Log(message: "Ahora hay " + _players.Count + " jugadores");
 
+        if (_players.Count <= 1)
+        {
+            ShowAbandonHUD();
+        }
+
         //finishedPlayers--;
     }
 
@@ -264,4 +269,9 @@ public class PolePositionManager : NetworkBehaviour
         _uiManager.ShowStartButton();
     }
 
+    [ClientRpc]
+    public void ShowAbandonHUD()
+    {
+        _uiManager.AbandonMenu();
+    }
 }
