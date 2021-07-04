@@ -34,6 +34,7 @@ public class SetupPlayer : NetworkBehaviour
         _polePositionManager.AddPlayer(_playerInfo);
         _newId = _polePositionManager.NumPlayers() -1;
         _playerInfo.CurrentLap = 0;
+        _polePositionManager.OnPositionChangeEvent += OnPositionChangeEventHandler;
         _polePositionManager.OnFinalPositionChangeEvent += OnFinalPositionChangeEventHandler;
     }
 
@@ -46,7 +47,14 @@ public class SetupPlayer : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
+        _polePositionManager.AddPlayer(_playerInfo);
         //_playerInfo.ID = NetworkServer.connections.Count - 1;
+    }
+
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+        _polePositionManager.RemovePlayer(_playerInfo);
     }
 
     public override void OnStartAuthority()
