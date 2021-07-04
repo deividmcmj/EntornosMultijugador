@@ -120,7 +120,6 @@ public class PlayerInfo : NetworkBehaviour
         {
             if (CurrentLap == TotalLaps)
             {
-                Debug.Log(message: "Jugador: " + Name + " Vuelta actual y total: " + CurrentLap + TotalLaps);
                 _setupPlayer.ActivarResultados();
                 _setupPlayer.StopCar();
                 _polePositionManager.SetFinishedPlayers(_polePositionManager.GetFinishedPlayers() + 1);

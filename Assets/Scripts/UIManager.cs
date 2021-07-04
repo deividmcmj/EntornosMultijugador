@@ -249,7 +249,6 @@ public class UIManager : MonoBehaviour
     }
 
   
-    
     public void StartRace()
     {
         buttonStartHUD.SetActive(false);
@@ -284,10 +283,14 @@ public class UIManager : MonoBehaviour
     public void Restart()
     { 
         showGUI = true;
-        inputName = null;
         results = false;
-        NewColor();
         inputFieldIP.text = "";
+
+        for (int i=0; i > 4 ; i++)
+        {
+            finalResults[i].text = "";
+        }
+            
     }
 
 }

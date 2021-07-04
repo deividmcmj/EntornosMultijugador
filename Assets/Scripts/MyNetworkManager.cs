@@ -27,7 +27,7 @@ public class MyNetworkManager : NetworkManager
             _polePositionManager.RemovePlayer(conn.identity.GetComponent<PlayerInfo>());
         }
 
-        NetworkIdentity.Destroy(conn.identity);
+        NetworkIdentity.Destroy(GameObject.Find($"Player [connId={conn.connectionId}]"));
         base.OnServerDisconnect(conn);
     }
 

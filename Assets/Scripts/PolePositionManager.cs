@@ -134,6 +134,7 @@ public class PolePositionManager : NetworkBehaviour
         {
             readyPlayers = 0;
             finishedPlayers = 0;
+            previousRaceOrder = "";
             Restart();
         }
     }
