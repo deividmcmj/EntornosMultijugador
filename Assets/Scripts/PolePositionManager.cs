@@ -112,16 +112,16 @@ public class PolePositionManager : NetworkBehaviour
     public void RemovePlayer(PlayerInfo player)
     {
         Debug.Log(message: "Desconectado jugador " + player.ID);
-
+        int newID = _players.IndexOf(player);
         if (player.GetFinished())
         {
             finishedPlayers--;
 
         }
-
-        _players.RemoveAt(player.ID);
-        Destroy(_debuggingSpheres[player.ID]);
-        _debuggingSpheres.RemoveAt(player.ID);
+        _players.Remove(player);
+        //_players.RemoveAt(player.ID);
+        Destroy(_debuggingSpheres[newID]);
+        _debuggingSpheres.RemoveAt(newID);
 
         Debug.Log(message: "Ahora hay " + _players.Count + " jugadores");
 
@@ -137,7 +137,7 @@ public class PolePositionManager : NetworkBehaviour
         // Update car arc-lengths
         foreach (PlayerInfo player in _players)
         {
-            if (player != null)
+            if (player != null && !player.GetFinished())
             {
                 ComputeCarArcLength(player.ID);
             }
