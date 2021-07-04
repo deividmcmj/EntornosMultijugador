@@ -11,7 +11,6 @@ using System.Threading;
 public class PolePositionManager : NetworkBehaviour
 {
     public int maxNumPlayers = 4;
-    public int numPlayers;
     public string previousRaceOrder = "";
     private MyNetworkManager _networkManager;
 
@@ -41,6 +40,16 @@ public class PolePositionManager : NetworkBehaviour
             return readyPlayers == _players.Count;
         }
     }
+
+    public int numPlayers
+    {
+        get
+        {
+            return _players.Count;
+        }
+    }
+
+
     public int GetReadyPlayers()
     {
         return readyPlayers;

@@ -11,7 +11,7 @@ using Random = System.Random;
 
 public class SetupPlayer : NetworkBehaviour
 {
-    [SyncVar] private int _id;
+    //[SyncVar] private int _id;
     [SyncVar] private int _totalLaps;
 
 
@@ -31,6 +31,7 @@ public class SetupPlayer : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
+
         //_id = NetworkServer.connections.Count - 1;
     }
 
@@ -41,7 +42,7 @@ public class SetupPlayer : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-        _playerInfo.ID = NetworkServer.connections.Count - 1;
+        //_playerInfo.ID = NetworkServer.connections.Count - 1;
         _playerInfo.CurrentLap = 0;
         _playerInfo.TotalLaps = 1;
         _polePositionManager.AddPlayer(_playerInfo);
@@ -50,9 +51,11 @@ public class SetupPlayer : NetworkBehaviour
 
     public override void OnStartAuthority()
     {
-        CmdSetDisplayName(_uiManager.inputName + _playerInfo.ID);
+        CmdSetDisplayName(_uiManager.inputName);
         CmdSetDisplayColor(_uiManager.color);
-        _uiManager.HideButtonResultsHUD();
+        CmdSetID(_polePositionManager.numPlayers);
+        //_uiManager.HideButtonResultsHUD();
+        Debug.Log(message: NetworkServer.connections);
     }
 
 
@@ -171,6 +174,7 @@ public class SetupPlayer : NetworkBehaviour
         _playerInfo.Name = displayName;
     }
 
+
     //Color del jugador, con su getter y setter
 
     [SyncVar(hook = nameof(HandleDisplayColorUpdated))] [SerializeField] private Color displayColor;
@@ -198,6 +202,43 @@ public class SetupPlayer : NetworkBehaviour
     {
         displayColorRenderer.materials[1].color = newColor;
     }
+
+
+    //ID del jugador, con su getter y setter
+
+    [SyncVar(hook = nameof(HandleDisplayIDUpdated))] [SerializeField] private int _id;
+
+
+    [Server]
+    public void SetID(int newID)
+    {
+        Debug.Log(message: "Mi nuevo ID es: " + newID);
+        _id = newID;
+    }
+
+    public int GetID()
+    {
+        return _id;
+    }
+
+    [Command]
+    public void CmdSetID(int newID)
+    {
+        SetID(newID);
+    }
+
+    private void HandleDisplayIDUpdated(int oldID, int newID)
+    {
+        _playerInfo.ID = _id;
+    }
+
+
+
+
+
+
+
+
 
     public void StartCar()
     {
