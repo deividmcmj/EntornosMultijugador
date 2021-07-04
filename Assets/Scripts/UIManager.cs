@@ -130,7 +130,7 @@ public class UIManager : MonoBehaviour
 
         //m_PolePositionManager.RemovePlayer(m_playerInfo);
         m_NetworkManager.StopClient();
-        m_NetworkManager.StopHost();
+        //m_NetworkManager.StopHost();
 
         m_camera.Reset();
     }
@@ -218,7 +218,7 @@ public class UIManager : MonoBehaviour
         {
             inputName = inputFieldName.text;
             m_NetworkManager.StartClient();
-            m_NetworkManager.networkAddress = inputFieldIP.text;
+            //m_NetworkManager.networkAddress = inputFieldIP.text;
             ActivateWaitScreen();
         }
         else
@@ -280,4 +280,14 @@ public class UIManager : MonoBehaviour
     {
         ActivateAbandonHUD();
     }
+
+    public void Restart()
+    { 
+        showGUI = true;
+        inputName = null;
+        results = false;
+        NewColor();
+        inputFieldIP.text = "";
+    }
+
 }

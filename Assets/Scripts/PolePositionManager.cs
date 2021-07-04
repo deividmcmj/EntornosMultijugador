@@ -125,9 +125,16 @@ public class PolePositionManager : NetworkBehaviour
 
         Debug.Log(message: "Ahora hay " + _players.Count + " jugadores");
 
-        if (_players.Count <= 1)
+        if (_players.Count == 1)
         {
             ShowAbandonHUD();
+        }
+
+        if (_players.Count == 0)
+        {
+            readyPlayers = 0;
+            finishedPlayers = 0;
+            Restart();
         }
     }
 
@@ -137,7 +144,7 @@ public class PolePositionManager : NetworkBehaviour
         // Update car arc-lengths
         foreach (PlayerInfo player in _players)
         {
-            if (player != null && !player.GetFinished())
+            if (player != null && !player.GetFinished() && _players.Count != 1)
             {
                 ComputeCarArcLength(player.ID);
             }
@@ -285,4 +292,12 @@ public class PolePositionManager : NetworkBehaviour
     {
         _uiManager.ShowMenuButton();
     }
+
+    [ClientRpc]
+    public void Restart()
+    {
+        _uiManager.Restart();
+    }
+
+
 }

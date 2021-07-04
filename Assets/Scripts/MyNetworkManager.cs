@@ -26,6 +26,8 @@ public class MyNetworkManager : NetworkManager
             Debug.Log(message: "Un jugador se ha desconectado");
             _polePositionManager.RemovePlayer(conn.identity.GetComponent<PlayerInfo>());
         }
+
+        NetworkIdentity.Destroy(conn.identity);
         base.OnServerDisconnect(conn);
     }
 

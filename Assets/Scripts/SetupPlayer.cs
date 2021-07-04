@@ -263,4 +263,10 @@ public class SetupPlayer : NetworkBehaviour
     {
         _uiManager.results = true;
     }
+    
+
+    public void Restart()
+    {
+        _playerInfo.CurrentLap = 0;
+    }
 }
