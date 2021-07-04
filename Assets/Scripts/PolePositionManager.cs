@@ -31,7 +31,6 @@ public class PolePositionManager : NetworkBehaviour
 
     private int readyPlayers = 0;
     private int finishedPlayers = 0;
-    private float countDown = 0;
 
     public bool AllReady
     {
@@ -83,7 +82,7 @@ public class PolePositionManager : NetworkBehaviour
         if (_networkManager == null) _networkManager = FindObjectOfType<MyNetworkManager>();
         if (_circuitController == null) _circuitController = FindObjectOfType<CircuitController>();
         if (_uiManager == null) _uiManager = FindObjectOfType<UIManager>();
-        if (_setupPlayer == null) _setupPlayer = FindObjectOfType<SetupPlayer>();
+        //if (_setupPlayer == null) _setupPlayer = FindObjectOfType<SetupPlayer>();
     }
 
     private void Update()
@@ -106,7 +105,7 @@ public class PolePositionManager : NetworkBehaviour
 
         if (_players.Count >= 2)
         {
-            _uiManager.ShowStartButton();
+            ShowStartButton();
         }
     }
     
@@ -224,55 +223,26 @@ public class PolePositionManager : NetworkBehaviour
         return minArcL;
     }
 
-    public void UpdateCountdown()
-    {
-        countDown += Time.deltaTime;
-        if (countDown >= 0.0f && countDown < 1.0f)
-        {
-            OnCountdownChangeEvent("3");
-        }
-        else if (countDown >= 1.0f && countDown < 2.0f)
-        {
-            OnCountdownChangeEvent("2");
-        }
-        else if (countDown >= 2.0f && countDown < 3.0f)
-        {
-            OnCountdownChangeEvent("1");
-        }
-        else if (countDown >= 3.0f && countDown < 4.0f)
-        {
-            OnCountdownChangeEvent("YA!");
-        }
-        else
-        {
-            OnCountdownChangeEvent("");
-        }
-    }
-
     public void PlayerFinished(PlayerInfo player)
     {
         OnFinalPositionChangeEvent(finishedPlayers - 1, finishedPlayers + ": " + player.Name);
     }
 
-    public void StartCountDown()
-    {
+
    
-        UpdateCountdown();
-        if (countDown >= 3.0f)
-        {
-            foreach (PlayerInfo player in _players)
-            {
-                player.GetComponent<SetupPlayer>().StartCar();
-            }
-        }
-    }
-    /*
     public IEnumerator ServerCountDown()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4);
+        Debug.Log(message: "YA!");
+        
+        foreach (PlayerInfo player in _players)
+        {
+            Debug.Log(message: "Empieza la carrera para " + player.Name);
+            player.StartCar();
+        }
         
     }
-    */
+    
 
     public IEnumerator CountDown()
     {
@@ -285,10 +255,13 @@ public class PolePositionManager : NetworkBehaviour
         OnCountdownChangeEvent("YA!");
         yield return new WaitForSeconds(1);
         OnCountdownChangeEvent("");
-        foreach (PlayerInfo player in _players)
-        {
-            player.GetComponent<SetupPlayer>().StartCar();
-        }
+
+    }
+
+    [ClientRpc]
+    public void ShowStartButton()
+    {
+        _uiManager.ShowStartButton();
     }
 
 }

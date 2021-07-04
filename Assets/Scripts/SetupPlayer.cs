@@ -240,7 +240,6 @@ public class SetupPlayer : NetworkBehaviour
 
 
 
-
     public void StartCar()
     {
         _playerController.CanMove = true;
@@ -251,14 +250,7 @@ public class SetupPlayer : NetworkBehaviour
         _playerController.CanMove = false;
     }
 
-    public void StopAllCars()
-    {
-        foreach (PlayerInfo player in _polePositionManager.GetPlayers())
-        {
-            player.GetComponent<PlayerController>().CanMove = false;
-        }
-    }
-
+ 
     [ClientRpc]
     public void StartRace()
     {

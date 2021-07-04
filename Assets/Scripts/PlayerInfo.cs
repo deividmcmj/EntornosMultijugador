@@ -39,7 +39,7 @@ public class PlayerInfo : NetworkBehaviour
     public bool Backwards = false;
 
     //Devuelve true si el jugador está listo y false si no.
-    [SyncVar(hook = nameof(HandleDisplayReadyUpdated))] [SerializeField] private bool Ready = false;
+    [SyncVar] [SerializeField] private bool Ready = false;
 
     public bool GetReady()
     {
@@ -59,6 +59,7 @@ public class PlayerInfo : NetworkBehaviour
         StartRace();
     }
     
+
     private void HandleDisplayReadyUpdated(bool oldBoolean, bool newBoolean)
     {
         Debug.Log(message: Name + "Estoy ready");
@@ -150,7 +151,7 @@ public class PlayerInfo : NetworkBehaviour
     public void StartRace()
     {
         _setupPlayer.StartRace();
-        //StartCoroutine(_polePositionManager.ServerCountDown());
+        StartCoroutine(_polePositionManager.ServerCountDown());
     }
 
     public void FinishRace()
@@ -158,6 +159,11 @@ public class PlayerInfo : NetworkBehaviour
         _setupPlayer.FinishRace();
     }
 
+    public void StartCar()
+    {
+        Debug.Log(message: Name + " arrancando coche");
+        _setupPlayer.StartCar();
+    }
 
     public override string ToString()
     {
