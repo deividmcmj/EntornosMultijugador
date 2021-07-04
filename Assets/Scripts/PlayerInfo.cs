@@ -69,7 +69,6 @@ public class PlayerInfo : NetworkBehaviour
         
     }
 
-
     //Devuelve true si ha terminado la carrera y false si no.
     [SyncVar(hook = nameof(HandleDisplayFinishedUpdated))] [SerializeField] private bool Finished = false;
 
@@ -81,7 +80,7 @@ public class PlayerInfo : NetworkBehaviour
     [Server]
     public void SetFinished(bool newFinished)
     {
-        Debug.Log(message: "Jugador " + ID + " finalizó la carrera");
+        Debug.Log(message: "Jugador " + Name + " finalizó la carrera");
         Finished = newFinished;
     }
 
@@ -105,6 +104,7 @@ public class PlayerInfo : NetworkBehaviour
     {
         _setupPlayer = GetComponent<SetupPlayer>();
         _polePositionManager = FindObjectOfType<PolePositionManager>();
+        TotalLaps = 1;
     }
 
     public void InPosition()
@@ -119,11 +119,12 @@ public class PlayerInfo : NetworkBehaviour
         {
             if (CurrentLap == TotalLaps)
             {
+                Debug.Log(message: "Jugador: " + Name + " Vuelta actual y total: " + CurrentLap + TotalLaps);
                 _setupPlayer.ActivarResultados();
                 _setupPlayer.StopCar();
                 _polePositionManager.SetFinishedPlayers(_polePositionManager.GetFinishedPlayers() + 1);
                 FinalPosition = _polePositionManager.GetPlayers().IndexOf(this);
-                _polePositionManager.PlayerFinished(this);
+                _polePositionManager.PlayerFinished(Name);
                 CmdSetFinished(true);
             }
             else

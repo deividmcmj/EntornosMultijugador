@@ -12,7 +12,6 @@ using Random = System.Random;
 public class SetupPlayer : NetworkBehaviour
 {
     //[SyncVar] private int _id;
-    [SyncVar] private int _totalLaps;
     [SyncVar] private int _newId;
 
 
@@ -34,6 +33,8 @@ public class SetupPlayer : NetworkBehaviour
         base.OnStartServer();
         _polePositionManager.AddPlayer(_playerInfo);
         _newId = _polePositionManager.NumPlayers() -1;
+        _playerInfo.CurrentLap = 0;
+        _polePositionManager.OnFinalPositionChangeEvent += OnFinalPositionChangeEventHandler;
     }
 
     /// <summary>
@@ -46,9 +47,6 @@ public class SetupPlayer : NetworkBehaviour
     {
         base.OnStartClient();
         //_playerInfo.ID = NetworkServer.connections.Count - 1;
-        _playerInfo.CurrentLap = 0;
-        _playerInfo.TotalLaps = 1;
-
     }
 
     public override void OnStartAuthority()
@@ -157,6 +155,7 @@ public class SetupPlayer : NetworkBehaviour
     {
         Debug.Log(message: "Mi nuevo nombre es: " + newName);
         displayName = newName;
+        _playerInfo.Name = displayName;
     }
 
     public string GetDisplayName()
@@ -215,6 +214,7 @@ public class SetupPlayer : NetworkBehaviour
     {
         Debug.Log(message: "Mi nuevo ID es: " + newID);
         _id = newID;
+        _playerInfo.ID = _id;
     }
 
     public int GetID()

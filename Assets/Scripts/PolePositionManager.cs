@@ -25,8 +25,8 @@ public class PolePositionManager : NetworkBehaviour
     public event Action<int, string> OnFinalPositionChangeEvent;
     public event Action<string> OnCountdownChangeEvent;
 
-    public UIManager _uiManager;
     public SetupPlayer _setupPlayer;
+    public UIManager _uiManager;
 
 
     private int readyPlayers = 0;
@@ -113,6 +113,12 @@ public class PolePositionManager : NetworkBehaviour
     {
         Debug.Log(message: "Desconectado jugador " + player.ID);
 
+        if (player.GetFinished())
+        {
+            finishedPlayers--;
+
+        }
+
         _players.RemoveAt(player.ID);
         Destroy(_debuggingSpheres[player.ID]);
         _debuggingSpheres.RemoveAt(player.ID);
@@ -123,8 +129,6 @@ public class PolePositionManager : NetworkBehaviour
         {
             ShowAbandonHUD();
         }
-
-        //finishedPlayers--;
     }
 
     public void UpdateRaceProgress()
@@ -231,9 +235,17 @@ public class PolePositionManager : NetworkBehaviour
         return minArcL;
     }
 
-    public void PlayerFinished(PlayerInfo player)
+    public void PlayerFinished(string name)
     {
-        OnFinalPositionChangeEvent(finishedPlayers - 1, finishedPlayers + ": " + player.Name);
+        if(OnFinalPositionChangeEvent != null)
+        {
+            OnFinalPositionChangeEvent(finishedPlayers - 1, finishedPlayers + ": " + name);
+        }
+        else
+        {
+            Debug.Log(message: "Pues es null: " + name);
+
+        }
     }
 
    
