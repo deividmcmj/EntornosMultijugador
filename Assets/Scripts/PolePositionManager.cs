@@ -133,7 +133,10 @@ public class PolePositionManager : NetworkBehaviour
         // Update car arc-lengths
         foreach (PlayerInfo player in _players)
         {
-            ComputeCarArcLength(player.ID);
+            if (player != null)
+            {
+                ComputeCarArcLength(player.ID);
+            }
             if (player.CorrectCurrentLap == 0)
             {
                 player.TotalDistance = player.ArcInfo - _circuitController.CircuitLength;

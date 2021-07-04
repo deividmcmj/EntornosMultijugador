@@ -31,6 +31,12 @@ public class MyNetworkManager : NetworkManager
 
     public override void OnClientDisconnect(NetworkConnection conn)
     {
+        if (conn.identity != null)
+        {
+            Debug.Log(message: "El servidor se ha desconectado");
+            _polePositionManager._uiManager.BackToMenu();
+            _polePositionManager.RemovePlayer(conn.identity.GetComponent<PlayerInfo>());
+        }
         base.OnClientDisconnect(conn);
     }
 }

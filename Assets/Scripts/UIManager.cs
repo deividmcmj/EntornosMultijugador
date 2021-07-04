@@ -131,8 +131,9 @@ public class UIManager : MonoBehaviour
         //m_PolePositionManager.RemovePlayer(m_playerInfo);
         m_NetworkManager.StopClient();
         m_NetworkManager.StopHost();
+        m_NetworkManager.StopServer();
 
-
+        m_camera.Reset();
 
     }
 
